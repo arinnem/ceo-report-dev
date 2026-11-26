@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#ffffff">
+<title>Dự án Trọng điểm</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#26241f;--mut:#7a7466;--line:#ebe4d3;--band:#f3e9cf;--bandT:#7a5a12;--gold:#a8740f;--amb:#b8610a;--red:#b3261e;--grn:#2e7d4f;
+--c1:#6f8f6a;--c2:#d9a441;--c3:#b3261e;--c4:#ddd6c6;--c0:#4f6f86}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Arial,"Helvetica Neue",Helvetica,sans-serif;color:var(--ink);background:#fff;font-size:15px;line-height:1.4}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
+.wrap{max-width:560px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 20px 40px}
+.eb{font-size:12px;letter-spacing:.06em;color:var(--gold);font-weight:700;text-transform:uppercase}
+.h1{font-size:24px;font-weight:700;line-height:1.22;margin-top:4px}
+.rule{height:3px;background:var(--band);margin:10px 0 6px}
+.asof{font-size:12.5px;color:var(--mut)}
+.sec{font-size:12px;font-weight:700;letter-spacing:.05em;color:var(--bandT);text-transform:uppercase;margin:22px 0 6px}
+.card{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:14px}
+.ch{background:var(--band);color:var(--bandT);font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:8px 12px}
+.ch span{font-weight:400;text-transform:none;letter-spacing:0;color:#9a8550}
+.cb{padding:12px}
+.sbar{display:flex;height:12px;border-radius:6px;overflow:hidden;gap:2px;background:#f4f0e7}
+.lg{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;margin-top:10px;font-size:14px}
+.lg button{display:flex;align-items:center;gap:7px;padding:5px 0;min-height:32px}
+.lg b{margin-left:auto;font-size:16px}
+.lg u{width:10px;height:10px;border-radius:2px;display:inline-block}
+.kp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.kc{border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.kl{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--bandT);line-height:1.3;min-height:2.6em}
+.kv{font-size:26px;font-weight:700;margin-top:2px}
+.kv small{font-size:14px;font-weight:400;color:var(--mut);margin-left:4px}
+.ks{font-size:12.5px;color:var(--mut);line-height:1.35;margin-top:2px}
+.kc.w .kv{color:var(--red)}
+.att{width:100%;padding:11px 0;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.4;display:flex;gap:10px;align-items:flex-start}
+.att .t{flex:1}.att small{display:block;color:var(--mut);font-size:12.5px;margin-top:2px}
+.go{color:#c9bfa8;font-size:22px;line-height:1}
+.mk{width:8px;height:8px;border-radius:50%;margin-top:7px;flex:none;background:var(--amb)}
+.mk.r{background:var(--red)}
+.more{color:var(--gold);font-weight:700;font-size:14px;padding:12px 0;display:block}
+.search{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:16px;margin-top:18px;outline:none;font-family:inherit}
+.search:focus{border-color:var(--gold)}
+.gh{display:flex;justify-content:space-between;align-items:baseline;background:var(--band);margin:18px -20px 0;padding:9px 20px;font-size:13.5px;font-weight:700;color:var(--bandT)}
+.gh span{font-weight:400;color:#9a8550;font-size:12.5px}
+.pr{width:100%;display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);min-height:56px}
+.pr .c{width:28px;color:var(--gold);font-weight:700;font-size:13.5px;flex:none}
+.pr .n{flex:1;font-size:15px;line-height:1.3}
+.pr .n small{display:block;font-size:12.5px;margin-top:2px;color:var(--mut)}
+.pr .p{text-align:right;width:62px;flex:none}
+.pr .p b{font-size:15.5px;color:var(--gold)}
+.pr .p i{display:block;height:3px;background:#efe9dc;margin-top:5px;border-radius:2px}
+.pr .p i u{display:block;height:100%;background:var(--gold);border-radius:2px}
+.s-a{color:var(--amb)!important}.s-r{color:var(--red)!important;font-weight:700}.s-g{color:var(--grn)!important}
+.back{color:var(--gold);font-weight:700;font-size:15.5px;padding:6px 0;margin-bottom:8px}
+.top3{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:12px}
+.big{font-size:42px;font-weight:700;color:var(--gold);line-height:1}
+.facts{font-size:13.5px;line-height:1.6;color:var(--mut);text-align:right}
+.facts b{color:var(--ink);font-weight:400}
+.bar{height:4px;background:#efe9dc;border-radius:2px;margin:12px 0 4px}.bar u{display:block;height:100%;background:var(--gold);border-radius:2px}
+.box{background:#fbf6ea;border-left:3px solid var(--red);padding:10px 12px;margin-top:16px;font-size:14.5px;line-height:1.45}
+.box h6{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--red);margin-bottom:3px}
+.box h6.g{color:var(--grn);margin-top:10px}
+.box.auto{border-left-color:var(--amb)}.box.auto h6{color:var(--amb)}
+.task{padding:13px 0;border-bottom:1px solid var(--line)}
+.tt{display:flex;justify-content:space-between;gap:10px;font-size:15.5px;font-weight:700;line-height:1.3}
+.tt b{color:var(--gold);font-size:16.5px;white-space:nowrap}
+.tg{font-size:12.5px;color:var(--mut);margin:3px 0 8px}
+.kvr{font-size:14px;line-height:1.45;margin-top:5px;display:flex;gap:8px}
+.kvr em{font-style:normal;color:var(--mut);width:64px;flex:none;font-size:12.5px;padding-top:2px}
+.ms{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:6px 0;border-bottom:1px solid #f4efe4}
+.ms span{color:var(--mut);white-space:nowrap}
+.plus{color:var(--grn)}
+.empty{color:var(--mut);font-size:14px;padding:14px 0}
+.foot{margin-top:28px;font-size:12px;color:var(--mut);line-height:1.5}
+.err{background:#fbf6ea;border-radius:10px;padding:12px;font-size:13.5px;margin-top:16px}
+.loading{padding:60px 0;text-align:center;color:var(--mut)}
+/* wide screen: PDF-style table */
+.desk{display:none}
+@media (min-width:760px){
+ .phoneonly{display:none}
+ .desk{display:block;max-width:1240px;margin:0 auto;padding:26px 32px 40px}
+}
+.dh{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.tools{display:flex;gap:14px;align-items:center;font-size:13.5px;color:var(--mut)}
+.btn{border:1px solid var(--line);border-radius:8px;padding:7px 14px;color:var(--ink)}
+.btn:hover{border-color:var(--gold)}
+.ov{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px;margin-top:16px}
+.ov .card{margin-top:0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:var(--band);color:var(--bandT);text-align:left;padding:8px;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
+td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top;line-height:1.4}
+.toc td{padding:7px 8px}
+.toc tr.g td{background:#fbf6ea;font-weight:700;color:var(--bandT)}
+.toc a{color:inherit;text-decoration:none}
+.toc a:hover{color:var(--gold)}
+td.side{background:#fdfaf3;width:200px}
+td.pc{color:var(--gold);font-weight:700;font-size:16px;text-align:center;width:70px}
+.vm{color:var(--gold);font-weight:700}
+.grp{margin-top:34px;page-break-before:always}
+.grp:first-of-type{page-break-before:auto}
+.gt{display:flex;justify-content:space-between;align-items:baseline}
+.gt h2{font-size:21px}
+.gt a{font-size:12.5px;color:var(--mut);text-decoration:none}
+.chip{display:inline-block;font-size:12px;font-weight:700;background:var(--band);color:var(--bandT);border-radius:8px;padding:1px 7px;margin-left:6px}
+@media print{
+ @page{size:A4 landscape;margin:10mm}
+ .phoneonly{display:none!important}
+ .desk{display:block!important;padding:0;max-width:none}
+ .tools{display:none}
+ tr,td{page-break-inside:avoid}
+ body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div id="app" class="loading">Đang tải dữ liệu…</div>
+<script>
+/* ===== Cấu hình: ID Google Sheet (phần giữa /d/ và /edit trong link) ===== */
+const SHEET_ID = new URLSearchParams(location.search).get('sheet') || '1REPalLHurrRoH2aTNM2TwxVha7dh40X2JJGoopUe9Ro';
+const TABS = ['CauHinh','Nhom','DuAn','DauViec','ChiSo','LuuY'];
+
+/* ---------- đọc dữ liệu ---------- */
+function parseCSV(t){const out=[];let row=[],f='',q=false;for(let i=0;i<t.length;i++){const c=t[i];
+ if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}
+ else if(c=='"')q=true;else if(c==','){row.push(f);f=''}else if(c=='\n'){row.push(f);out.push(row);row=[];f=''}else if(c!='\r')f+=c}
+ if(f!==''||row.length){row.push(f);out.push(row)}return out}
+function toObjs(rows){const h=(rows[0]||[]).map(s=>s.trim());return rows.slice(1).filter(r=>r.some(x=>x.trim()!=='')).map(r=>Object.fromEntries(h.map((k,i)=>[k,(r[i]||'').trim()])))}
+async function loadTab(tab){
+ const local=new URLSearchParams(location.search).get('src')==='local';
+ const url=local?`data/${tab}.csv`:`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&headers=1&sheet=${encodeURIComponent(tab)}&_=${Date.now()}`;
+ const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error(`Không đọc được sheet "${tab}" (${r.status})`);
+ return toObjs(parseCSV(await r.text()))}
+const num=v=>{if(v==null||v==='')return null;let s=String(v).replace(/\s/g,'');const pc=s.endsWith('%');s=s.replace('%','');
+ if(/^\d{1,3}(\.\d{3}){2,}(,\d+)?$/.test(s)||/^\d{1,3}(\.\d{3})+,\d+$/.test(s))s=s.replace(/\./g,'').replace(',','.');else s=s.replace(',','.');const n=parseFloat(s);if(isNaN(n))return null;return pc?n/100:n};
+const pct=v=>{const n=num(v);if(n==null)return null;return n>1.0001?n/100:n};
+const dt=v=>{if(!v)return null;let m=String(v).match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);if(m)return new Date(+m[3],m[2]-1,+m[1]);
+ m=String(v).match(/(\d{4})-(\d{1,2})-(\d{1,2})/);if(m)return new Date(+m[1],m[2]-1,+m[3]);return null};
+const fd=d=>d?`${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`:'';
+const fds=d=>d?`${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}`:'';
+const fp=p=>p==null?'—':(Math.round(p*1000)/10).toString().replace('.',',')+'%';
+const days=(a,b)=>Math.round((a-b)/864e5);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const lines=s=>String(s||'').split(/\n/).map(x=>x.trim()).filter(Boolean);
+
+/* ---------- luật & tổng hợp ---------- */
+const ST={done:'Hoàn thành',ok:'Đúng tiến độ',warn:'Cảnh báo',late:'Quá hạn',none:'Chưa cập nhật'};
+function build(raw){
+ const cfg=Object.fromEntries(raw.CauHinh.map(r=>[r['Tham số'],r['Giá trị']]));
+ const today=dt(cfg['Ngày chốt'])||(()=>{const d=new Date();d.setHours(0,0,0,0);return d})();
+ const P={satDA:num(cfg['Sát hạn dự án (ngày)'])??30,satDV:num(cfg['Sát hạn đầu việc (ngày)'])??7,min:pct(cfg['Ngưỡng % tối thiểu'])??.8,
+  winDA:num(cfg['Cửa sổ kiểm tra % dự án (ngày)'])??60,winDV:num(cfg['Cửa sổ kiểm tra % đầu việc (ngày)'])??14,maxLY:num(cfg['Số mục lưu ý tối đa'])??5};
+ const groups=raw.Nhom.map(g=>({ma:g['Mã nhóm'].padStart(2,'0'),ten:g['Tên nhóm'],ngan:g['Tên ngắn']||g['Tên nhóm'],ut:num(g['Ưu tiên'])??9,dt:g['Đặc tính nhóm'],items:[]}))
+  .sort((a,b)=>a.ut-b.ut||a.ma.localeCompare(b.ma));
+ const gmap=Object.fromEntries(groups.map(g=>[g.ma,g]));
+ const tasks={};raw.DauViec.forEach(t=>{(tasks[t['Mã DA']]??=[]).push({stt:t['STT'],ten:t['Đầu việc'],mt:t['Mục tiêu'],p:pct(t['% hoàn thành']),nhan:t['Nhãn %']||'Đầu việc',
+  kq:lines(t['Kết quả đến hiện tại']),kh:lines(t['Kế hoạch tuần tới']),han:dt(t['Hạn']),pt:t['Phụ trách']})});
+ const alerts=[];let mocSap=[];
+ const projects=raw.DuAn.map(r=>{
+  const p={ma:r['Mã DA'],ten:r['Tên dự án'],ngan:r['Tên ngắn'],nhom:(r['Mã nhóm']||'').padStart(2,'0'),gd:r['Giai đoạn'],mota:r['Mô tả / mục tiêu'],
+   moc:lines(r['Mốc chính']).map(s=>{const m=s.match(/^(.*?):\s*(\d{1,2}\/\d{1,2}\/\d{4})\s*$/);return m?{ten:m[1],ngay:dt(m[2])}:{ten:s,ngay:null}}),
+   han:dt(r['Hạn hoàn thành']),tt:r['Trạng thái'],gdda:r['Giám đốc dự án'],vm:lines(r['Vướng mắc / hỗ trợ cần']),dx:lines(r['Đề xuất']),
+   tasks:(tasks[r['Mã DA']]||[]).sort((a,b)=>(+a.stt)-(+b.stt)),al:[]};
+  const tp=p.tasks.map(t=>t.p).filter(x=>x!=null);
+  p.p=pct(r['% hoàn thành'])??(tp.length?tp.reduce((a,b)=>a+b,0)/tp.length:null);
+  const add=(lv,code,txt,d)=>{const a={lv,code,txt,d,p};p.al.push(a);alerts.push(a)};
+  const isDone=/hoàn thành/i.test(p.tt||'');
+  if(!isDone){
+   p.tasks.forEach(t=>{if(!t.han||(t.p??0)>=1)return;const n=days(t.han,today);
+    if(n<0)add(3,'QUA_HAN',`${t.ten}: quá hạn ${fd(t.han)} (${-n} ngày)`,n);
+    else if(n<=P.satDV)add(2,'SAT_HAN',`${t.ten}: còn ${n} ngày (${fd(t.han)})`,n);
+    else if(n<=P.winDV&&(t.p??0)<P.min)add(2,'PCT_THAP',`${t.ten}: còn ${n} ngày nhưng mới đạt ${fp(t.p)}`,n)});
+   if(p.han){const n=days(p.han,today);
+    if(n<0)add(3,'QUA_HAN',`Dự án quá hạn ${fd(p.han)} (${-n} ngày)`,n);
+    else if(n<=P.winDA&&p.p!=null&&p.p<P.min)add(2,'PCT_THAP',`Còn ${n} ngày đến hạn nhưng mới đạt ${fp(p.p)}`,n)}
+   p.moc.forEach(m=>{if(!m.ngay)return;const n=days(m.ngay,today);if(n>=0&&n<=P.satDA){mocSap.push({p,m,n});add(2,'SAT_HAN',`Mốc “${m.ten}” còn ${n} ngày (${fd(m.ngay)})`,n)}});
+   if(/tạm dừng/i.test(p.tt||''))add(2,'TAM_DUNG','Trạng thái “Tạm dừng”',999);
+  }
+  const hasData=p.p!=null||p.tasks.some(t=>t.kq.length);
+  p.st=isDone?'done':!hasData||!p.tt||/chưa bắt đầu/i.test(p.tt)?'none':p.al.some(a=>a.lv==3)?'late':(p.al.length||/vướng mắc|tạm dừng/i.test(p.tt))?'warn':'ok';
+  p.near=p.al.filter(a=>a.d!=null&&a.d>=0&&a.d<900).sort((a,b)=>a.d-b.d)[0];
+  (gmap[p.nhom]||groups[groups.length-1]).items.push(p);return p});
+ groups.forEach(g=>g.items.sort((a,b)=>a.ma.localeCompare(b.ma,undefined,{numeric:true})));
+ const manual=raw.LuuY.filter(r=>/^có$/i.test(r['Hiển thị'])).sort((a,b)=>num(a['Thứ tự'])-num(b['Thứ tự'])).map(r=>({lv:/cao/i.test(r['Mức'])?3:2,txt:r['Nội dung'],manual:1}));
+ const auto=alerts.filter(a=>a.code!=='TAM_DUNG'||true).sort((a,b)=>b.lv-a.lv||a.d-b.d);
+ const seen=new Set(),autoU=[];auto.forEach(a=>{const k=a.p.ma;if(!seen.has(k)){seen.add(k);autoU.push(a)}});
+ const luuy=[...manual,...autoU];
+ const count={};Object.keys(ST).forEach(k=>count[k]=projects.filter(p=>p.st===k).length);
+ const kpis=raw.ChiSo.filter(r=>/^có$/i.test(r['Hiển thị'])).map(r=>({ten:r['Tên chỉ số'],v:num(r['Giá trị']),dv:r['Đơn vị'],gc:r['Ghi chú'],w:/cảnh báo/i.test(r['Mức']),tt:num(r['Thứ tự'])??9}));
+ const mocU=[...new Map(mocSap.sort((a,b)=>a.n-b.n).map(x=>[x.p.ma+x.m.ten,x])).values()];
+ kpis.push({ten:`Mốc sắp đến hạn`,v:mocU.length,dv:'',gc:`Trong ${P.satDA} ngày · `+[...new Set(mocU.map(x=>shortName(x.p)))].slice(0,3).join(', '),tt:2});
+ kpis.sort((a,b)=>a.tt-b.tt);
+ return {cfg,today,P,groups,projects,luuy,count,kpis,maxLY:P.maxLY}}
+function shortName(p){return p.ngan||(p.ten.length>24?p.ten.slice(0,24)+'…':p.ten)}
+
+/* ---------- giao diện ---------- */
+let D=null,q='';
+const stCls={late:'s-r',warn:'s-a',done:'s-g',ok:'',none:''};
+const stCol={done:'var(--c0)',ok:'var(--c1)',warn:'var(--c2)',late:'var(--c3)',none:'var(--c4)'};
+function healthCard(){const n=D.projects.length,c=D.count;const ks=['done','ok','warn','late','none'].filter(k=>c[k]||k!=='done');
+ return `<div class="card"><div class="ch">Sức khỏe tiến độ <span>· ${n} dự án</span></div><div class="cb">
+ <div class="sbar">${ks.map(k=>c[k]?`<i style="width:${c[k]/n*100}%;background:${stCol[k]}"></i>`:'').join('')}</div>
+ <div class="lg">${ks.map(k=>`<button onclick="filterSt('${k}')"><u style="background:${stCol[k]}"></u>${ST[k]}<b class="${k==='late'&&c[k]?'s-r':''}">${c[k]}</b></button>`).join('')}</div></div></div>`}
+function kpiCards(){return `<div class="kp">${D.kpis.map(k=>`<div class="kc ${k.w&&k.v?'w':''}"><div class="kl">${esc(k.ten)}</div><div class="kv">${k.v==null?'—':k.v.toLocaleString('vi-VN')}${k.dv&&k.dv!=='đầu việc'?`<small>${esc(k.dv)}</small>`:''}</div><div class="ks">${esc(k.gc)}</div></div>`).join('')}</div>`}
+function attRow(a){return a.manual?`<div class="att"><i class="mk ${a.lv==3?'r':''}"></i><div class="t">${esc(a.txt)}</div></div>`:
+ `<button class="att" onclick="go('${a.p.ma}')"><i class="mk ${a.lv==3?'r':''}"></i><div class="t"><b>${esc(shortName(a.p))}</b> – ${esc(a.txt)}<small>${a.p.ma} · ${esc(grpOf(a.p).ngan)}</small></div><span class="go">›</span></button>`}
+const grpOf=p=>D.groups.find(g=>g.items.includes(p));
+function projRow(p){const s=p.st==='none'?'Chưa cập nhật':ST[p.st]+(p.near&&p.st!=='late'?` · ${p.near.txt.split(':')[0].length<28?p.near.txt.replace(/^.*?:\s*/,''):''}`:'');
+ return `<button class="pr" onclick="go('${p.ma}')"><span class="c">${p.ma}</span><div class="n">${esc(p.ten)}<small class="${stCls[p.st]}">${esc(ST[p.st])}${p.gdda?'':' · chưa có GĐDA'}</small></div><div class="p"><b>${fp(p.p)}</b><i><u style="width:${(p.p||0)*100}%"></u></i></div></button>`}
+function home(){
+ const all=D.luuy,show=window._allLY?all:all.slice(0,3);
+ const ql=q.toLowerCase();
+ const groups=D.groups.map(g=>({g,items:g.items.filter(p=>(!ql||(p.ma+' '+p.ten+' '+(p.gdda||'')).toLowerCase().includes(ql))&&(!window._fst||p.st===window._fst))})).filter(x=>x.items.length);
+ return `<div class="wrap phoneonly">
+ <div class="eb">${esc(D.cfg['Đơn vị lập']||'')}</div><div class="h1">${esc(D.cfg['Tiêu đề']||'Dự án Trọng điểm')}</div><div class="rule"></div>
+ <div class="asof">${D.projects.length} dự án · ${D.groups.length} nhóm · số liệu ngày ${fd(D.today)} · tải lúc ${new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'})}</div>
+ ${healthCard()}${kpiCards()}
+ <div class="sec">Cần Tổng Giám đốc lưu ý</div>
+ ${show.map(attRow).join('')||'<div class="empty">Không có điểm cần lưu ý.</div>'}
+ ${all.length>3?`<button class="more" onclick="window._allLY=!window._allLY;render()">${window._allLY?'Thu gọn':'Xem tất cả ('+all.length+')'}</button>`:''}
+ <input class="search" type="search" placeholder="⌕  Tìm dự án, GĐDA…" value="${esc(q)}" oninput="q=this.value;renderList()">
+ ${window._fst?`<button class="more" onclick="window._fst=null;render()">Đang lọc: ${ST[window._fst]} · bỏ lọc ✕</button>`:''}
+ <div id="list">${groups.map(({g,items})=>`<div class="gh">Nhóm ${g.ma} · ${esc(g.ngan)}<span>${g.items.length} dự án</span></div>${items.map(projRow).join('')}`).join('')||'<div class="empty">Không tìm thấy dự án.</div>'}</div>
+ <div class="foot">${esc(D.cfg['Ghi chú']||'')}</div></div>${desk()}`}
+function renderList(){const el=document.getElementById('list');if(!el)return;const tmp=document.createElement('div');tmp.innerHTML=home();el.innerHTML=tmp.querySelector('#list').innerHTML}
+function proj(p){const g=grpOf(p);const auto=p.al.filter(a=>a.lv>=2).slice(0,3);
+ return `<div class="wrap phoneonly">
+ <button class="back" onclick="history.length>1?history.back():go('')">‹ Danh mục</button>
+ <div class="eb">${p.ma} · ${esc(g.ngan)}${p.gd?' · '+esc(p.gd):''}</div><div class="h1" style="font-size:22px">${esc(p.ten)}</div>
+ <div class="top3"><div><div class="big">${fp(p.p)}</div><div class="asof ${stCls[p.st]}" style="margin-top:5px;font-size:14px">${ST[p.st]}</div></div>
+ <div class="facts">GĐDA <b>${esc(p.gdda||'—')}</b><br>Hạn <b>${fd(p.han)||'—'}</b>${p.near?`<br>Gần nhất <b>${p.near.d>=0?'còn '+p.near.d+' ngày':''}</b>`:''}</div></div>
+ <div class="bar"><u style="width:${(p.p||0)*100}%"></u></div>
+ ${p.vm.length||p.dx.length?`<div class="box">${p.vm.length?`<h6>Vướng mắc</h6>${p.vm.map(esc).join('<br>')}`:''}${p.dx.length?`<h6 class="g">Đề xuất</h6>${p.dx.map(esc).join('<br>')}`:''}</div>`:''}
+ ${auto.length?`<div class="box auto"><h6>Cảnh báo tự động</h6>${auto.map(a=>esc(a.txt)).join('<br>')}</div>`:''}
+ ${p.mota?`<div class="sec">Mục tiêu</div><div style="font-size:14.5px">${esc(p.mota)}</div>`:''}
+ <div class="sec">Đầu việc</div>
+ ${p.tasks.map(t=>`<div class="task"><div class="tt"><span>${esc(t.stt)}. ${esc(t.ten)}</span><b>${fp(t.p)}</b></div>
+  <div class="tg">${[t.mt,t.han?'hạn '+fds(t.han):'',t.pt].filter(Boolean).map(esc).join(' · ')}</div>
+  ${t.kq.length?`<div class="kvr"><em>Kết quả</em><span>${t.kq.map((l,i)=>l.startsWith('+')?`<span class="plus">${esc(l.slice(1).trim())}</span>`:i==0?`<b>${esc(l)}</b>`:esc(l)).join('<br>')}</span></div>`:''}
+  ${t.kh.length?`<div class="kvr"><em>Tuần tới</em><span>${t.kh.map((l,i)=>i==0?`<b>${esc(l)}</b>`:esc(l)).join('<br>')}</span></div>`:''}</div>`).join('')||'<div class="empty">Chưa cập nhật đầu việc.</div>'}
+ ${p.moc.length?`<div class="sec">Mốc chính</div>${p.moc.map(m=>`<div class="ms">${esc(m.ten)}<span>${fd(m.ngay)}</span></div>`).join('')}`:''}
+ </div>${desk(p.ma)}`}
+function desk(focus){const c=D.count;
+ return `<div class="desk"><div class="dh"><div><div class="eb">${esc(D.cfg['Đơn vị lập']||'')} · Ngày chốt ${fd(D.today)}</div><div class="h1">Báo cáo Tổng thể Danh mục ${esc(D.cfg['Tiêu đề']||'Dự án Trọng điểm')}</div>
+ <div class="asof" style="margin-top:4px">${D.projects.length} dự án trình Tổng Giám đốc, gom thành ${D.groups.length} nhóm theo thứ tự ưu tiên điều hành.</div></div>
+ <div class="tools"><button class="btn" onclick="window.print()">Tải PDF</button></div></div>
+ <div class="ov">${healthCard()}<div class="card"><div class="ch">Điểm cần lưu ý</div><div class="cb" style="font-size:13px">${D.luuy.slice(0,D.maxLY).map(a=>`<div style="padding:3px 0">${a.manual?esc(a.txt):`<b>${a.p.ma} ${esc(shortName(a.p))}:</b> ${esc(a.txt)}`}</div>`).join('')}</div></div>
+ <div class="card"><div class="ch">Chỉ số</div><div class="cb">${D.kpis.map(k=>`<div style="padding:4px 0"><b style="font-size:20px" class="${k.w&&k.v?'s-r':''}">${k.v==null?'—':k.v.toLocaleString('vi-VN')}</b> <span style="font-size:13px">${esc(k.ten)}</span><div class="ks">${esc(k.gc)}</div></div>`).join('')}</div></div></div>
+ <table class="toc" style="margin-top:16px"><tr><th>Mã</th><th>Danh mục dự án</th><th>Hoàn thành</th><th>Tình trạng</th><th>GĐDA</th></tr>
+ ${D.groups.map(g=>`<tr class="g"><td colspan="5"><a href="#g${g.ma}">Nhóm ${g.ma} · ${esc(g.ten)}</a> <span style="font-weight:400;color:var(--mut)">${g.items.length} dự án</span></td></tr>${g.items.map(p=>`<tr><td style="color:var(--gold);font-weight:700">${p.ma}</td><td><a href="#p${p.ma}">${esc(p.ten)}</a></td><td style="color:var(--gold);font-weight:700">${fp(p.p)}</td><td class="${stCls[p.st]}">${ST[p.st]}</td><td>${esc(p.gdda||'—')}</td></tr>`).join('')}`).join('')}</table>
+ ${D.groups.map(g=>`<div class="grp" id="g${g.ma}"><div class="gt"><h2>Nhóm ${g.ma}: ${esc(g.ten)}</h2><a href="#top" onclick="scrollTo(0,0);return false">↑ Mục lục</a></div>
+ <div class="asof" style="margin:3px 0 10px">${esc(g.dt||'')} · ${g.items.length} dự án<span class="chip">Ưu tiên ${g.ut}</span></div>
+ <table><tr><th>Dự án</th><th>Đầu việc / mục tiêu</th><th style="text-align:center">Hoàn thành</th><th>Kết quả đến hiện tại</th><th>Kế hoạch tuần tới</th><th>Vướng mắc / đề xuất</th></tr>
+ ${g.items.map(p=>{const ts=p.tasks.length?p.tasks:[null];return ts.map((t,i)=>`<tr${i==0?` id="p${p.ma}"`:''}>${i==0?`<td class="side" rowspan="${ts.length}"><span style="color:var(--gold);font-weight:700">${p.ma}</span><br><b>${esc(p.ten.toUpperCase())}</b><br><span style="color:var(--mut)">${p.gdda?'GĐDA '+esc(p.gdda)+'<br>':''}${p.moc.slice(0,4).map(m=>esc(m.ten)+(m.ngay?': '+fd(m.ngay):'')).join('<br>')}</span><br><span class="${stCls[p.st]}">${ST[p.st]}</span> · <b style="color:var(--gold)">${fp(p.p)}</b>${p.han?`<br><span style="color:var(--mut)">Hạn ${fd(p.han)}</span>`:''}</td>`:''}
+  ${t?`<td><b>${esc(t.stt)}. ${esc(t.ten)}</b><br><span style="color:var(--mut)">${esc(t.mt)}</span></td><td class="pc">${fp(t.p)}<div style="font-size:12px;font-weight:400;color:var(--mut)">${esc(t.nhan)}</div></td>
+  <td>${t.kq.map((l,j)=>l.startsWith('+')?`<span class="plus">${esc(l.slice(1).trim())}</span>`:j==0?`<b>${esc(l)}</b>`:esc(l)).join('<br>')||'<span style="color:var(--mut)">Chưa cập nhật</span>'}</td>
+  <td>${t.kh.map((l,j)=>j==0?`<b>${esc(l)}</b>`:esc(l)).join('<br>')}${t.han?`<br><span style="color:var(--mut)">Hạn ${fd(t.han)}${t.pt?' · '+esc(t.pt):''}</span>`:''}</td>`:`<td colspan="4" style="color:var(--mut)">Chưa cập nhật đầu việc</td>`}
+  ${i==0?`<td rowspan="${ts.length}">${p.vm.length?`<span class="vm">Vướng mắc</span><br>${p.vm.map(esc).join('<br>')}<br>`:''}${p.dx.length?`<span class="vm">Đề xuất</span><br>${p.dx.map(esc).join('<br>')}`:''}${!p.vm.length&&!p.dx.length?'<span style="color:var(--mut)">—</span>':''}</td>`:''}</tr>`).join('')}).join('')}
+ </table></div>`).join('')}
+ <div class="foot">${esc(D.cfg['Ghi chú']||'')}</div></div>`}
+
+function filterSt(k){window._fst=window._fst===k?null:k;render();setTimeout(()=>document.getElementById('list')?.scrollIntoView({behavior:'smooth'}),30)}
+function go(ma){location.hash=ma?'#/da/'+ma:'#/'}
+function render(){const app=document.getElementById('app');app.className='';const m=location.hash.match(/^#\/da\/(.+)$/);
+ const p=m&&D.projects.find(x=>x.ma===decodeURIComponent(m[1]));app.innerHTML=p?proj(p):home();
+ if(m&&innerWidth>=760){const el=document.getElementById('p'+(p&&p.ma));el&&el.scrollIntoView()}}
+addEventListener('hashchange',()=>{render();scrollTo(0,0)});
+(async()=>{try{const raw={};await Promise.all(TABS.map(async t=>raw[t]=await loadTab(t)));D=build(raw);render()}
+ catch(e){document.getElementById('app').innerHTML=`<div class="wrap"><div class="h1">Dự án Trọng điểm</div><div class="err">Chưa tải được dữ liệu. ${esc(e.message)}<br>Kiểm tra: Google Sheet đã chia sẻ “Bất kỳ ai có đường liên kết đều xem được” và ID sheet đúng.</div></div>`}})();
+</script>
+</body>
+</html>

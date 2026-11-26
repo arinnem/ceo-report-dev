@@ -33,7 +33,7 @@ jobs:
       - name: Chuẩn bị trang
         run: |
           mkdir -p _site
-          cp index.html report.html robots.txt .nojekyll _site/
+          cp index.html report.html pdf.html robots.txt .nojekyll _site/
           cp -r fonts assets _site/
       - name: Tạo PDF từ Google Sheet
         run: node tools/make-pdf.mjs _site

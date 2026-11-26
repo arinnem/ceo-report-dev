@@ -211,7 +211,7 @@ function build(raw){
  kpis.sort((a,b)=>a.tt-b.tt);
  return {cfg,today,P,groups,projects,luuy,count,kpis,maxLY:P.maxLY}}
 const PDF_URL='pdf/Bao-cao-Du-an-Trong-diem.pdf';
-function pdfUrl(){return PDF_URL}
+function pdfUrl(){return 'pdf.html'}
 let PDF_META=null;
 fetch('pdf/meta.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(m=>{PDF_META=m;document.querySelectorAll('.pdft').forEach(e=>e.textContent=pdfTime())}).catch(err=>console.warn('pdf meta',err));
 function pdfTime(){if(!PDF_META)return'';const d=new Date(new Date(PDF_META.generated).getTime()+7*3600e3),z=n=>String(n).padStart(2,'0');return `PDF lúc ${z(d.getUTCHours())}:${z(d.getUTCMinutes())} · ${z(d.getUTCDate())}/${z(d.getUTCMonth()+1)}`}
@@ -237,7 +237,7 @@ function home(){
  const groups=D.groups.map(g=>({g,items:g.items.filter(p=>(!ql||(p.ma+' '+p.ten+' '+(p.gdda||'')).toLowerCase().includes(ql))&&(!window._fst||p.st===window._fst))})).filter(x=>x.items.length);
  return `<div class="wrap phoneonly">
  <img class="brand" src="assets/sungroup.png" alt="Sun Group" width="112" height="36">
- <div class="hd"><div><div class="eb">${esc(D.cfg['Đơn vị lập']||'')}</div><div class="h1">${esc(D.cfg['Tiêu đề']||'Dự án Trọng điểm')}</div></div><div class="pdfw"><a class="pdfb" href="${pdfUrl()}" download>Tải PDF</a><div class="pdft">${pdfTime()}</div></div></div><div class="rule"></div>
+ <div class="hd"><div><div class="eb">${esc(D.cfg['Đơn vị lập']||'')}</div><div class="h1">${esc(D.cfg['Tiêu đề']||'Dự án Trọng điểm')}</div></div><div class="pdfw"><a class="pdfb" href="${pdfUrl()}">Tải PDF</a><div class="pdft">${pdfTime()}</div></div></div><div class="rule"></div>
  <div class="asof">${D.projects.length} dự án · ${D.groups.length} nhóm · số liệu ngày ${fd(D.today)} · tải lúc ${new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'})}</div>
  ${healthCard()}${kpiCards()}
  <div class="sec">Cần Tổng Giám đốc lưu ý</div>
@@ -268,7 +268,7 @@ function proj(p){const g=grpOf(p);const auto=p.al.filter(a=>a.lv>=2).slice(0,3);
 function desk(focus){const c=D.count;
  return `<div class="desk"><div class="dh"><div><div class="eb">${esc(D.cfg['Đơn vị lập']||'')} · Ngày chốt ${fd(D.today)}</div><div class="h1">Báo cáo Tổng thể Danh mục ${esc(D.cfg['Tiêu đề']||'Dự án Trọng điểm')}</div>
  <div class="asof" style="margin-top:4px">${D.projects.length} dự án trình Tổng Giám đốc, gom thành ${D.groups.length} nhóm theo thứ tự ưu tiên điều hành.</div></div>
- <div class="tools"><img class="dlogo" src="assets/sungroup.png" alt="Sun Group"><a class="btn" href="${pdfUrl()}" download>Tải PDF</a><span class="pdft">${pdfTime()}</span></div></div>
+ <div class="tools"><img class="dlogo" src="assets/sungroup.png" alt="Sun Group"><a class="btn" href="${pdfUrl()}">Tải PDF</a><span class="pdft">${pdfTime()}</span></div></div>
  <div class="ov">${healthCard()}<div class="card"><div class="ch">Điểm cần lưu ý</div><div class="cb" style="font-size:13px">${D.luuy.slice(0,D.maxLY).map(a=>`<div style="padding:3px 0">${a.manual?esc(a.txt):`<b>${a.p.ma} ${esc(shortName(a.p))}:</b> ${esc(a.txt)}`}</div>`).join('')}</div></div>
  <div class="card"><div class="ch">Chỉ số</div><div class="cb">${D.kpis.map(k=>`<div style="padding:4px 0"><b style="font-size:20px" class="${k.w&&k.v?'s-r':''}">${k.v==null?'—':k.v.toLocaleString('vi-VN')}</b> <span style="font-size:13px">${esc(k.ten)}</span><div class="ks">${esc(k.gc)}</div></div>`).join('')}</div></div></div>
  <table class="toc" style="margin-top:16px"><tr><th>Mã</th><th>Danh mục dự án</th><th>Hoàn thành</th><th>Tình trạng</th><th>GĐDA</th></tr>

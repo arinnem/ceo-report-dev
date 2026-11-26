@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<title>Báo cáo PDF – Dự án Trọng điểm</title>
+<style>
+@font-face{font-family:"SVN-Gilroy";src:url("fonts/SVN-Gilroy-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"SVN-Gilroy";src:url("fonts/SVN-Gilroy-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+:root{--ink:#26241f;--mut:#7a7466;--line:#ebe4d3;--band:#f3e9cf;--gold:#a8740f}
+body{font-family:"SVN-Gilroy",Arial,sans-serif;color:var(--ink);background:#ebe6da}
+.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.back{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 6px 0 0;color:var(--gold);font-weight:600;font-size:16px;text-decoration:none;white-space:nowrap}
+.back b{font-size:24px;line-height:1;font-weight:400;margin-top:-2px}
+.mid{flex:1;min-width:0}
+.mid .t{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mid .s{font-size:12px;color:var(--mut);margin-top:1px}
+.dl{flex:none;display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:10px;background:var(--gold);color:#fff;font-weight:600;font-size:14px;text-decoration:none}
+.pages{max-width:1100px;margin:0 auto;padding:14px 10px calc(30px + env(safe-area-inset-bottom))}
+.pages img{display:block;width:100%;height:auto;background:#fff;margin:0 auto 12px;box-shadow:0 1px 4px rgba(0,0,0,.14);border-radius:2px}
+.pages img.por{max-width:min(100%,780px)}
+.msg{padding:60px 20px;text-align:center;color:var(--mut);font-size:15px}
+.hint{text-align:center;font-size:12px;color:var(--mut);margin:-4px 0 10px}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="back" id="back" href="./"><b>‹</b> Quay lại</a>
+  <div class="mid"><div class="t">Báo cáo Dự án Trọng điểm</div><div class="s" id="sub">Đang tải…</div></div>
+  <a class="dl" id="dl" href="pdf/Bao-cao-Du-an-Trong-diem.pdf" download="Bao-cao-Du-an-Trong-diem.pdf">Tải PDF</a>
+</header>
+<main class="pages" id="pages"><div class="msg">Đang tải báo cáo…</div></main>
+<script>
+const back = document.getElementById('back');
+back.addEventListener('click', e => {
+  // quay về trang trước nếu đến từ trang chính, nếu không thì về trang chính
+  if (document.referrer && new URL(document.referrer).origin === location.origin && history.length > 1) { e.preventDefault(); history.back(); }
+});
+const z = n => String(n).padStart(2, '0');
+fetch('pdf/meta.json', {cache: 'no-store'}).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(m => {
+  const d = new Date(new Date(m.generated).getTime() + 7 * 3600e3);
+  document.getElementById('sub').textContent = `${m.pages} trang · tạo lúc ${z(d.getUTCHours())}:${z(d.getUTCMinutes())} ${z(d.getUTCDate())}/${z(d.getUTCMonth() + 1)}`;
+  const v = encodeURIComponent(m.generated);
+  const box = document.getElementById('pages'); box.innerHTML = '<div class="hint">Chụm hai ngón để phóng to</div>';
+  m.images.forEach((src, i) => {
+    const img = new Image(); img.src = `pdf/${src}?v=${v}`; img.alt = `Trang ${i + 1}`; img.loading = i < 2 ? 'eager' : 'lazy'; img.decoding = 'async';
+    img.onload = () => { if (img.naturalHeight > img.naturalWidth) img.classList.add('por'); };
+    box.appendChild(img);
+  });
+}).catch(err => {
+  document.getElementById('sub').textContent = '';
+  document.getElementById('pages').innerHTML = `<div class="msg">Chưa có bản PDF (${err.message}). Bấm “Tải PDF” để thử tải trực tiếp.</div>`;
+});
+</script>
+</body>
+</html>

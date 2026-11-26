@@ -4,19 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="assets/favicon-32.png">
 <title>Báo cáo Tổng thể Danh mục Dự án Trọng điểm</title>
 <style>
+@font-face{font-family:"SVN-Gilroy";src:url("fonts/SVN-Gilroy-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"SVN-Gilroy";src:url("fonts/SVN-Gilroy-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"SVN-Gilroy";src:url("fonts/SVN-Gilroy-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"SVN-Gilroy";src:url("fonts/SVN-Gilroy-Bold.woff2") format("woff2");font-weight:600;font-display:swap}
+
 :root { --ink:#1f1f1f; --ink2:#5b5b5b; --ink3:#8a8170; --line:#e6dcc3; --line2:#efe7d4; --band:#ead8a6; --bandink:#4a3a12; --cream:#fbf6ea; --cream2:#fdfaf3;
   --gold:#a8740f; --goldd:#8a5f0c; --green:#2e7d4f; --orange:#c25e00; --red:#b3261e; --blue:#2f5f98; }
 * { box-sizing:border-box; }
-html { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-body { margin:0; font-family:Arial, "Liberation Sans", "Helvetica Neue", Helvetica, sans-serif; color:var(--ink); background:#ebe6da; font-size:8.6pt; line-height:1.38; }
+html { -webkit-print-color-adjust:exact; print-color-adjust:exact; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+body { margin:0; font-family:"SVN-Gilroy", Arial, "Helvetica Neue", Helvetica, sans-serif; color:var(--ink); background:#ebe6da; font-size:8.6pt; line-height:1.38; }
 a { color:var(--gold); text-decoration:none; }
 button { font:inherit; }
 
 /* ---------- app chrome ---------- */
 .bar { position:sticky; top:0; z-index:10; display:flex; align-items:center; gap:10px; padding:10px 20px; background:rgba(253,250,243,.92); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid var(--line); }
-.bar .ttl { font-weight:700; font-size:10.5pt; }
+.bar .ttl { font-weight:600; font-size:10.5pt; }
 .bar .fn { color:var(--ink2); font-size:9pt; flex:1; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
 .btn { border:1px solid var(--line); border-radius:8px; padding:6px 14px; background:#fff; color:var(--ink); font-weight:600; cursor:pointer; font-size:9pt; }
 .btn:hover { background:var(--cream); } .btn.pri { background:var(--gold); border-color:var(--gold); color:#fff; } .btn.pri:hover { background:var(--goldd); } .btn[disabled] { opacity:.4; cursor:default; }
@@ -24,11 +30,11 @@ button { font:inherit; }
 .drop h2 { font-size:20pt; margin:12px 0 6px; } .drop p { color:var(--ink2); margin:4px 0; font-size:10pt; }
 .drop .ico { width:56px; height:56px; margin:0 auto; border-radius:14px; background:var(--cream); display:flex; align-items:center; justify-content:center; }
 .drop .ico svg { stroke:var(--gold); }
-.drop .err { color:var(--red); font-weight:700; margin-top:14px; } .drop .hint { font-size:8.6pt; color:var(--ink3); margin-top:18px; }
+.drop .err { color:var(--red); font-weight:600; margin-top:14px; } .drop .hint { font-size:8.6pt; color:var(--ink3); margin-top:18px; }
 body.has-report .drop { display:none; }
 .warnbox { max-width:297mm; margin:16px auto 0; background:#fff8ec; border:1px solid #f0d49a; border-radius:12px; padding:10px 16px; font-size:8.8pt; }
 .warnbox b { color:var(--orange); } .warnbox ul { margin:4px 0 0; padding-left:18px; max-height:180px; overflow:auto; } .warnbox:empty { display:none; }
-body.dragging::after { content:"Thả file Excel (hoặc ảnh logo) vào đây"; position:fixed; inset:12px; border:3px dashed var(--gold); border-radius:20px; background:rgba(168,116,15,.06); display:flex; align-items:center; justify-content:center; font-size:18pt; font-weight:700; color:var(--gold); z-index:50; pointer-events:none; }
+body.dragging::after { content:"Thả file Excel (hoặc ảnh logo) vào đây"; position:fixed; inset:12px; border:3px dashed var(--gold); border-radius:20px; background:rgba(168,116,15,.06); display:flex; align-items:center; justify-content:center; font-size:18pt; font-weight:600; color:var(--gold); z-index:50; pointer-events:none; }
 
 /* ---------- pages ---------- */
 #pages { padding:16px 0 60px; }
@@ -40,20 +46,20 @@ body.dragging::after { content:"Thả file Excel (hoặc ảnh logo) vào đây"
 
 /* cover */
 .top { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; border-bottom:3px solid var(--band); padding-bottom:8px; margin-bottom:8px; }
-.logo { max-height:46px; max-width:170px; object-fit:contain; }
-.eyebrow { font-size:7.6pt; letter-spacing:.06em; text-transform:uppercase; color:var(--gold); font-weight:700; }
-h1 { font-size:21pt; font-weight:700; margin:3px 0 0; line-height:1.15; }
+.logo { height:40px; width:auto; max-width:170px; object-fit:contain; flex:none; }
+.eyebrow { font-size:7.6pt; letter-spacing:.06em; text-transform:uppercase; color:var(--gold); font-weight:600; }
+h1 { font-size:19pt; font-weight:700; letter-spacing:-.01em; margin:3px 0 0; line-height:1.15; }
 .lede { color:var(--ink2); font-size:10pt; margin:0 0 12px; }
 .kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-bottom:9px; }
 .kpi { background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:9px 11px 8px; }
-.kpi .l { font-size:7.4pt; color:var(--bandink); font-weight:700; text-transform:uppercase; letter-spacing:.03em; }
+.kpi .l { font-size:7.4pt; color:var(--bandink); font-weight:600; text-transform:uppercase; letter-spacing:.03em; }
 .kpi .v { font-size:19pt; font-weight:700; line-height:1.15; margin-top:2px; color:var(--ink); }
-.kpi .v small { font-size:10pt; color:var(--ink3); font-weight:700; }
+.kpi .v small { font-size:10pt; color:var(--ink3); font-weight:600; }
 .kpi .s { font-size:7.3pt; color:var(--ink2); margin-top:1px; }
 .kpi.alert .v { color:var(--red); } .kpi.blue .v { color:var(--gold); }
 .row2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
 .card { border:1px solid var(--line); border-radius:8px; overflow:hidden; }
-.card h3, .summary h3 { font-size:8pt; margin:0; font-weight:700; text-transform:uppercase; letter-spacing:.04em; background:var(--band); color:var(--bandink); padding:6px 10px; }
+.card h3, .summary h3 { font-size:8pt; margin:0; font-weight:600; text-transform:uppercase; letter-spacing:.04em; background:var(--band); color:var(--bandink); padding:6px 10px; }
 .card h3 span { font-weight:400; text-transform:none; letter-spacing:0; }
 .pie { display:flex; align-items:center; gap:14px; padding:10px 12px; }
 .pie svg { width:116px; height:116px; flex:none; }
@@ -63,20 +69,20 @@ h1 { font-size:21pt; font-weight:700; margin:3px 0 0; line-height:1.15; }
 .summary { border:1px solid var(--line); border-radius:8px; overflow:hidden; font-size:8.2pt; background:var(--cream2); }
 .summary ul { margin:8px 10px 8px 0; padding-left:24px; } .summary li { margin-bottom:4px; } .summary li.man::marker { color:var(--gold); }
 .summary > p { margin:8px 10px; }
-.summary .o { color:var(--orange); font-weight:700; }
+.summary .o { color:var(--orange); font-weight:600; }
 
 /* tables */
 table { width:100%; border-collapse:collapse; table-layout:fixed; }
-thead th { text-align:left; font-size:7.4pt; font-weight:700; color:var(--bandink); text-transform:uppercase; letter-spacing:.03em; padding:6px 7px; background:var(--band); vertical-align:middle; line-height:1.2; }
+thead th { text-align:left; font-size:7.4pt; font-weight:600; color:var(--bandink); text-transform:uppercase; letter-spacing:.03em; padding:6px 7px; background:var(--band); vertical-align:middle; line-height:1.2; }
 .idx td { padding:5px 7px; border-bottom:1px solid var(--line2); vertical-align:middle; }
-.idx tr.grp td { background:var(--cream); font-weight:700; font-size:8.4pt; border-bottom:1px solid var(--line); color:var(--bandink); }
+.idx tr.grp td { background:var(--cream); font-weight:600; font-size:8.4pt; border-bottom:1px solid var(--line); color:var(--bandink); }
 .gc { color:var(--ink3); font-weight:400; margin-left:6px; }
-.code { color:var(--ink3); font-weight:700; }
-.pg { text-align:right; white-space:nowrap; font-weight:700; }
+.code { color:var(--ink3); font-weight:600; }
+.pg { text-align:right; white-space:nowrap; font-weight:600; }
 a.lk { color:inherit; } a.lk:hover { color:var(--gold); }
-.pct { font-weight:700; color:var(--gold); }
+.pct { font-weight:600; color:var(--gold); }
 .bar2 { height:4px; background:var(--line2); border-radius:2px; margin-top:2px; overflow:hidden; width:72px; } .bar2 i { display:block; height:100%; background:var(--gold); }
-.hp { display:inline-block; white-space:nowrap; font-size:7pt; font-weight:700; padding:1px 7px; border-radius:99px; }
+.hp { display:inline-block; white-space:nowrap; font-size:7pt; font-weight:600; padding:1px 7px; border-radius:99px; }
 .h-done { background:#e2f1e7; color:var(--green); } .h-ok { background:#e6eef8; color:var(--blue); } .h-warn { background:#fdf0d5; color:#9a6200; }
 .h-over { background:#fbe3e1; color:var(--red); } .h-none { background:#efebe2; color:var(--ink3); }
 .dash { color:#cfc6b0; }
@@ -86,7 +92,7 @@ a.lk { color:inherit; } a.lk:hover { color:var(--gold); }
 .gh h2 { font-size:17pt; font-weight:700; margin:0; flex:1; }
 .gh .toc { font-size:7.6pt; color:var(--ink3); }
 .gsub { color:var(--ink2); font-size:9pt; margin:0 0 8px; }
-.gsub .prio { display:inline-block; background:var(--band); color:var(--bandink); font-size:6.8pt; font-weight:700; border-radius:99px; padding:1px 7px; margin-left:4px; vertical-align:1px; }
+.gsub .prio { display:inline-block; background:var(--band); color:var(--bandink); font-size:6.8pt; font-weight:600; border-radius:99px; padding:1px 7px; margin-left:4px; vertical-align:1px; }
 .gblock + .gblock { margin-top:14px; }
 .det { border:1px solid var(--line); }
 .det thead th { border-right:1px solid #dcc78e; } .det thead th:last-child { border-right:0; }
@@ -94,25 +100,25 @@ a.lk { color:inherit; } a.lk:hover { color:var(--gold); }
 .det td:first-child { border-left:0; }
 .det tbody.proj > tr:last-child > td { border-bottom:1px solid #d9c58f; }
 .det td.pc, .det td.vx { background:var(--cream); }
-.pname { font-size:10.5pt; font-weight:700; line-height:1.2; margin:0 0 6px; text-transform:uppercase; }
-.pcode { font-size:7.2pt; color:var(--ink3); font-weight:700; margin-bottom:1px; }
+.pname { font-size:10.5pt; font-weight:600; line-height:1.2; margin:0 0 6px; text-transform:uppercase; }
+.pcode { font-size:7.2pt; color:var(--ink3); font-weight:600; margin-bottom:1px; }
 .pgd, .pdesc { color:var(--ink2); margin-bottom:6px; }
 .pms { color:var(--ink2); } .pms .ml { display:block; }
 .pmeta { margin-top:7px; display:flex; flex-wrap:wrap; gap:4px; align-items:center; font-size:7.3pt; color:var(--ink2); }
 .cont { color:var(--ink3); font-style:italic; font-size:7.3pt; text-transform:none; font-weight:400; }
-.tname { font-weight:700; font-size:8.6pt; } .tgoal { color:var(--ink2); margin-top:2px; }
+.tname { font-weight:600; font-size:8.6pt; } .tgoal { color:var(--ink2); margin-top:2px; }
 .tc { text-align:center; } .tc .pct { font-size:12.5pt; display:block; color:var(--gold); } .tc .lbl { display:block; font-size:7pt; color:var(--ink2); }
 .tc .dash { display:block; font-size:12.5pt; }
 .tc.warn .pct { color:var(--orange); } .tc.over .pct { color:var(--red); } .tc.done .pct { color:var(--green); }
-.kq .main, .kh .main { font-weight:700; font-size:8.6pt; }
+.kq .main, .kh .main { font-weight:600; font-size:8.6pt; }
 .kq p, .kh p { margin:1px 0; } .kq p:not(.main):not(.pos) { color:var(--ink2); } .kq .pos { color:var(--green); }
 .kh .meta { color:var(--ink2); font-size:7.5pt; margin-top:2px; }
 .na { color:#b5ab95; margin:0; }
 .more { color:var(--ink3); font-style:italic; font-size:7.1pt; margin-top:2px; }
-.vx h4 { margin:0 0 3px; font-size:8.8pt; font-weight:700; color:var(--gold); } .vx h4.x { margin-top:8px; }
-.vx ul { margin:0; padding-left:0; list-style:none; } .vx li { margin-bottom:3px; } .vx ul.x li { font-weight:700; }
+.vx h4 { margin:0 0 3px; font-size:8.8pt; font-weight:600; color:var(--gold); } .vx h4.x { margin-top:8px; }
+.vx ul { margin:0; padding-left:0; list-style:none; } .vx li { margin-bottom:3px; } .vx ul.x li { font-weight:600; }
 .vx li.auto { font-weight:400 !important; color:var(--ink2); font-size:7.2pt; }
-.auto-tag { display:inline-block; font-size:6.2pt; font-weight:700; color:var(--goldd); border:1px solid #dcc78e; border-radius:3px; padding:0 3px; margin-right:3px; vertical-align:1px; }
+.auto-tag { display:inline-block; font-size:6.2pt; font-weight:600; color:var(--goldd); border:1px solid #dcc78e; border-radius:3px; padding:0 3px; margin-right:3px; vertical-align:1px; }
 .fnote { font-size:7.2pt; color:var(--ink2); margin-top:8px; }
 
 #measure { position:absolute; left:-9999px; top:0; visibility:hidden; }
@@ -128,7 +134,8 @@ a.lk { color:inherit; } a.lk:hover { color:var(--gold); }
 @page land { size:A4 landscape; margin:0; }
 
 /* web wrapper */
-.bar .back{color:var(--gold);font-weight:700;font-size:10pt;white-space:nowrap}
+.btn.pri{text-decoration:none}
+.bar .back{color:var(--gold);font-weight:600;font-size:10pt;white-space:nowrap}
 .loading{padding:80px 20px;text-align:center;color:var(--ink2);font-size:11pt}
 @media screen and (max-width:1180px){ #pages{padding:10px 0 40px} }
 @media print{ .loading{display:none!important} }
@@ -138,7 +145,7 @@ a.lk { color:inherit; } a.lk:hover { color:var(--gold); }
 <div class="bar">
   <a class="back" href="./">‹ Trang chính</a>
   <span class="fn" id="fname">Đang tải dữ liệu…</span>
-  <button class="btn pri" id="bPrint" disabled>Tải PDF</button>
+  <a class="btn pri" id="bPdf" href="pdf/Bao-cao-Du-an-Trong-diem.pdf" download>Tải PDF</a>
 </div>
 <div class="warnbox" id="warn"></div>
 <div class="loading" id="loading">Đang dựng báo cáo…</div>
@@ -173,7 +180,7 @@ const DEF = {
           CO_PCT:{on:false, o:3, t:"Có tỷ lệ hoàn thành định lượng"}, MOC_SAT_HAN:{on:false, o:4, t:"Mốc đến hạn trong {sat_han} ngày"},
           CAN_CHU_Y:{on:false, o:5, t:"Dự án cần chú ý"}},
 };
-const DEFAULT_LOGO = "";
+const DEFAULT_LOGO = "assets/sungroup.png";
 const HEALTH = [["done","Hoàn thành","#2e7d4f"],["ok","Đúng tiến độ","#3c6ea6"],["warn","Cảnh báo","#e0a100"],["over","Quá hạn","#b3261e"],["none","Chưa cập nhật","#d9d1bf"]];
 const HNAME = Object.fromEntries(HEALTH.map(h => [h[0], h[1]]));
 
@@ -676,6 +683,17 @@ function render(data){
   }
   dbody.appendChild(frag(`<p class="fnote">${blank(cfg.info.ghichu) ? "" : esc(cfg.info.ghichu) + "<br>"}Nguồn: ${esc(fname)} · sheet “${esc(sheet)}”. Mục gắn nhãn “Tự động” sinh theo luật cảnh báo trong sheet Danh mục (sát hạn ≤ ${P.near} ngày; % thấp khi còn ≤ ${P.window} ngày mà dưới ${fmtN(P.minPct)}%). Mốc thời gian tính tại ngày chốt ${fmtD(cut)}.${P.clip ? " Nội dung vượt quy chuẩn độ dài được cắt bớt." : ""}</p>`));
   if (!fits(dbody)){ const last = dbody.lastElementChild; last.remove(); dbody = newPage("land"); dbody.appendChild(last); }
+  // ---------- spread: let detail tables fill the page height (pages ≥ 50% full)
+  for (const pg of PAGES){
+    if (!pg.classList.contains("land")) continue;
+    const b = pg.querySelector(".pbody"), avail = b.clientHeight, top = b.getBoundingClientRect().top, last = b.lastElementChild;
+    if (!last) continue;
+    const used = last.getBoundingClientRect().bottom - top;
+    const tabs = [...b.querySelectorAll("table.det")]; if (!tabs.length) continue;
+    const free = avail - used - 2; if (free <= 4 || used / avail < 0.5) continue;
+    const hs = tabs.map(t => t.offsetHeight), sum = hs.reduce((a, c) => a + c, 0);
+    tabs.forEach((t, i) => { t.style.height = (hs[i] + free * hs[i] / sum) + "px"; });
+  }
   // ---------- numbers & footers
   document.querySelectorAll("[data-pg]").forEach(a => a.textContent = "Tr. " + (where[a.dataset.pg] ?? "–"));
   const tot = PAGES.length;
@@ -751,6 +769,8 @@ async function main(){
   const warns = [];
   try {
     const T = {}; await Promise.all(TABS.map(async t => T[t] = await loadTab(t)));
+    await Promise.all([400,500,600,700].map(w => document.fonts.load(`${w} 10pt "SVN-Gilroy"`))).catch(err => warns.push('Font: ' + err.message));
+    await document.fonts.ready;
     const wb = toWorkbook(T);
     const cfg = parseConfig(wb, warns);
     const m = parseMain(wb, warns);
@@ -760,17 +780,14 @@ async function main(){
     document.body.classList.add('has-report');
     const res = render({cfg, groups, kpis: parseKpis(wb), cut, ky: m.ky, fname: 'Google Sheet “BC Dự án Trọng điểm”', sheet: 'DuAn / DauViec', warns});
     document.getElementById('loading').remove();
-    $('#bPrint').disabled = false;
     $('#fname').textContent = `${m.projects.length} dự án · ${res.pages} trang · ngày chốt ${fmtD(cut)}`;
     window.__result = {...res, warns};
     fitScreen();
-    if (QS.get('print') === '1') setTimeout(() => window.print(), 400);
   } catch(e){
     console.warn(e);
     document.getElementById('loading').textContent = 'Chưa tải được dữ liệu: ' + e.message;
   }
 }
-$('#bPrint').onclick = () => window.print();
 addEventListener('resize', fitScreen);
 addEventListener('beforeprint', () => { document.getElementById('pages').style.zoom = ''; });
 addEventListener('afterprint', fitScreen);

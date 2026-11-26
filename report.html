@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Báo cáo Tổng thể Danh mục Dự án Trọng điểm</title>
+<style>
+:root { --ink:#1f1f1f; --ink2:#5b5b5b; --ink3:#8a8170; --line:#e6dcc3; --line2:#efe7d4; --band:#ead8a6; --bandink:#4a3a12; --cream:#fbf6ea; --cream2:#fdfaf3;
+  --gold:#a8740f; --goldd:#8a5f0c; --green:#2e7d4f; --orange:#c25e00; --red:#b3261e; --blue:#2f5f98; }
+* { box-sizing:border-box; }
+html { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+body { margin:0; font-family:Arial, "Liberation Sans", "Helvetica Neue", Helvetica, sans-serif; color:var(--ink); background:#ebe6da; font-size:8.6pt; line-height:1.38; }
+a { color:var(--gold); text-decoration:none; }
+button { font:inherit; }
+
+/* ---------- app chrome ---------- */
+.bar { position:sticky; top:0; z-index:10; display:flex; align-items:center; gap:10px; padding:10px 20px; background:rgba(253,250,243,.92); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid var(--line); }
+.bar .ttl { font-weight:700; font-size:10.5pt; }
+.bar .fn { color:var(--ink2); font-size:9pt; flex:1; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.btn { border:1px solid var(--line); border-radius:8px; padding:6px 14px; background:#fff; color:var(--ink); font-weight:600; cursor:pointer; font-size:9pt; }
+.btn:hover { background:var(--cream); } .btn.pri { background:var(--gold); border-color:var(--gold); color:#fff; } .btn.pri:hover { background:var(--goldd); } .btn[disabled] { opacity:.4; cursor:default; }
+.drop { margin:40px auto; max-width:760px; background:#fff; border-radius:16px; padding:56px 40px; text-align:center; border:2px dashed #d8c99f; }
+.drop h2 { font-size:20pt; margin:12px 0 6px; } .drop p { color:var(--ink2); margin:4px 0; font-size:10pt; }
+.drop .ico { width:56px; height:56px; margin:0 auto; border-radius:14px; background:var(--cream); display:flex; align-items:center; justify-content:center; }
+.drop .ico svg { stroke:var(--gold); }
+.drop .err { color:var(--red); font-weight:700; margin-top:14px; } .drop .hint { font-size:8.6pt; color:var(--ink3); margin-top:18px; }
+body.has-report .drop { display:none; }
+.warnbox { max-width:297mm; margin:16px auto 0; background:#fff8ec; border:1px solid #f0d49a; border-radius:12px; padding:10px 16px; font-size:8.8pt; }
+.warnbox b { color:var(--orange); } .warnbox ul { margin:4px 0 0; padding-left:18px; max-height:180px; overflow:auto; } .warnbox:empty { display:none; }
+body.dragging::after { content:"Thả file Excel (hoặc ảnh logo) vào đây"; position:fixed; inset:12px; border:3px dashed var(--gold); border-radius:20px; background:rgba(168,116,15,.06); display:flex; align-items:center; justify-content:center; font-size:18pt; font-weight:700; color:var(--gold); z-index:50; pointer-events:none; }
+
+/* ---------- pages ---------- */
+#pages { padding:16px 0 60px; }
+.page { background:#fff; margin:0 auto 16px; box-shadow:0 1px 4px rgba(0,0,0,.12); position:relative; overflow:hidden; }
+.page.por { width:210mm; height:297mm; } .page.land { width:297mm; height:210mm; }
+.pin { position:absolute; inset:11mm 11mm 8mm 11mm; display:flex; flex-direction:column; }
+.pbody { flex:1; overflow:hidden; min-height:0; }
+.pfoot { height:6mm; display:flex; justify-content:space-between; align-items:flex-end; font-size:7pt; color:var(--ink3); border-top:1px solid var(--line); padding-top:1.5mm; }
+
+/* cover */
+.top { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; border-bottom:3px solid var(--band); padding-bottom:8px; margin-bottom:8px; }
+.logo { max-height:46px; max-width:170px; object-fit:contain; }
+.eyebrow { font-size:7.6pt; letter-spacing:.06em; text-transform:uppercase; color:var(--gold); font-weight:700; }
+h1 { font-size:21pt; font-weight:700; margin:3px 0 0; line-height:1.15; }
+.lede { color:var(--ink2); font-size:10pt; margin:0 0 12px; }
+.kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-bottom:9px; }
+.kpi { background:var(--cream); border:1px solid var(--line); border-radius:8px; padding:9px 11px 8px; }
+.kpi .l { font-size:7.4pt; color:var(--bandink); font-weight:700; text-transform:uppercase; letter-spacing:.03em; }
+.kpi .v { font-size:19pt; font-weight:700; line-height:1.15; margin-top:2px; color:var(--ink); }
+.kpi .v small { font-size:10pt; color:var(--ink3); font-weight:700; }
+.kpi .s { font-size:7.3pt; color:var(--ink2); margin-top:1px; }
+.kpi.alert .v { color:var(--red); } .kpi.blue .v { color:var(--gold); }
+.row2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+.card { border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+.card h3, .summary h3 { font-size:8pt; margin:0; font-weight:700; text-transform:uppercase; letter-spacing:.04em; background:var(--band); color:var(--bandink); padding:6px 10px; }
+.card h3 span { font-weight:400; text-transform:none; letter-spacing:0; }
+.pie { display:flex; align-items:center; gap:14px; padding:10px 12px; }
+.pie svg { width:116px; height:116px; flex:none; }
+.plg { display:grid; gap:4px; font-size:8pt; flex:1; }
+.plg div { display:flex; align-items:center; gap:6px; } .plg i { width:10px; height:10px; border-radius:2px; flex:none; }
+.plg b { margin-left:auto; } .plg span.pc { color:var(--ink3); width:34px; text-align:right; }
+.summary { border:1px solid var(--line); border-radius:8px; overflow:hidden; font-size:8.2pt; background:var(--cream2); }
+.summary ul { margin:8px 10px 8px 0; padding-left:24px; } .summary li { margin-bottom:4px; } .summary li.man::marker { color:var(--gold); }
+.summary > p { margin:8px 10px; }
+.summary .o { color:var(--orange); font-weight:700; }
+
+/* tables */
+table { width:100%; border-collapse:collapse; table-layout:fixed; }
+thead th { text-align:left; font-size:7.4pt; font-weight:700; color:var(--bandink); text-transform:uppercase; letter-spacing:.03em; padding:6px 7px; background:var(--band); vertical-align:middle; line-height:1.2; }
+.idx td { padding:5px 7px; border-bottom:1px solid var(--line2); vertical-align:middle; }
+.idx tr.grp td { background:var(--cream); font-weight:700; font-size:8.4pt; border-bottom:1px solid var(--line); color:var(--bandink); }
+.gc { color:var(--ink3); font-weight:400; margin-left:6px; }
+.code { color:var(--ink3); font-weight:700; }
+.pg { text-align:right; white-space:nowrap; font-weight:700; }
+a.lk { color:inherit; } a.lk:hover { color:var(--gold); }
+.pct { font-weight:700; color:var(--gold); }
+.bar2 { height:4px; background:var(--line2); border-radius:2px; margin-top:2px; overflow:hidden; width:72px; } .bar2 i { display:block; height:100%; background:var(--gold); }
+.hp { display:inline-block; white-space:nowrap; font-size:7pt; font-weight:700; padding:1px 7px; border-radius:99px; }
+.h-done { background:#e2f1e7; color:var(--green); } .h-ok { background:#e6eef8; color:var(--blue); } .h-warn { background:#fdf0d5; color:#9a6200; }
+.h-over { background:#fbe3e1; color:var(--red); } .h-none { background:#efebe2; color:var(--ink3); }
+.dash { color:#cfc6b0; }
+
+/* detail */
+.gh { display:flex; align-items:baseline; gap:10px; margin-bottom:1px; }
+.gh h2 { font-size:17pt; font-weight:700; margin:0; flex:1; }
+.gh .toc { font-size:7.6pt; color:var(--ink3); }
+.gsub { color:var(--ink2); font-size:9pt; margin:0 0 8px; }
+.gsub .prio { display:inline-block; background:var(--band); color:var(--bandink); font-size:6.8pt; font-weight:700; border-radius:99px; padding:1px 7px; margin-left:4px; vertical-align:1px; }
+.gblock + .gblock { margin-top:14px; }
+.det { border:1px solid var(--line); }
+.det thead th { border-right:1px solid #dcc78e; } .det thead th:last-child { border-right:0; }
+.det td { padding:6px 7px; vertical-align:top; border-bottom:1px solid var(--line); border-left:1px solid var(--line); font-size:7.9pt; background:var(--cream2); }
+.det td:first-child { border-left:0; }
+.det tbody.proj > tr:last-child > td { border-bottom:1px solid #d9c58f; }
+.det td.pc, .det td.vx { background:var(--cream); }
+.pname { font-size:10.5pt; font-weight:700; line-height:1.2; margin:0 0 6px; text-transform:uppercase; }
+.pcode { font-size:7.2pt; color:var(--ink3); font-weight:700; margin-bottom:1px; }
+.pgd, .pdesc { color:var(--ink2); margin-bottom:6px; }
+.pms { color:var(--ink2); } .pms .ml { display:block; }
+.pmeta { margin-top:7px; display:flex; flex-wrap:wrap; gap:4px; align-items:center; font-size:7.3pt; color:var(--ink2); }
+.cont { color:var(--ink3); font-style:italic; font-size:7.3pt; text-transform:none; font-weight:400; }
+.tname { font-weight:700; font-size:8.6pt; } .tgoal { color:var(--ink2); margin-top:2px; }
+.tc { text-align:center; } .tc .pct { font-size:12.5pt; display:block; color:var(--gold); } .tc .lbl { display:block; font-size:7pt; color:var(--ink2); }
+.tc .dash { display:block; font-size:12.5pt; }
+.tc.warn .pct { color:var(--orange); } .tc.over .pct { color:var(--red); } .tc.done .pct { color:var(--green); }
+.kq .main, .kh .main { font-weight:700; font-size:8.6pt; }
+.kq p, .kh p { margin:1px 0; } .kq p:not(.main):not(.pos) { color:var(--ink2); } .kq .pos { color:var(--green); }
+.kh .meta { color:var(--ink2); font-size:7.5pt; margin-top:2px; }
+.na { color:#b5ab95; margin:0; }
+.more { color:var(--ink3); font-style:italic; font-size:7.1pt; margin-top:2px; }
+.vx h4 { margin:0 0 3px; font-size:8.8pt; font-weight:700; color:var(--gold); } .vx h4.x { margin-top:8px; }
+.vx ul { margin:0; padding-left:0; list-style:none; } .vx li { margin-bottom:3px; } .vx ul.x li { font-weight:700; }
+.vx li.auto { font-weight:400 !important; color:var(--ink2); font-size:7.2pt; }
+.auto-tag { display:inline-block; font-size:6.2pt; font-weight:700; color:var(--goldd); border:1px solid #dcc78e; border-radius:3px; padding:0 3px; margin-right:3px; vertical-align:1px; }
+.fnote { font-size:7.2pt; color:var(--ink2); margin-top:8px; }
+
+#measure { position:absolute; left:-9999px; top:0; visibility:hidden; }
+
+@media print {
+  body { background:#fff; }
+  .bar, .drop, .warnbox { display:none !important; }
+  #pages { padding:0; }
+  .page { margin:0; box-shadow:none; break-after:page; }
+  .page.land { page:land; } .page:last-child { break-after:auto; }
+}
+@page { size:A4 portrait; margin:0; }
+@page land { size:A4 landscape; margin:0; }
+
+/* web wrapper */
+.bar .back{color:var(--gold);font-weight:700;font-size:10pt;white-space:nowrap}
+.loading{padding:80px 20px;text-align:center;color:var(--ink2);font-size:11pt}
+@media screen and (max-width:1180px){ #pages{padding:10px 0 40px} }
+@media print{ .loading{display:none!important} }
+</style>
+</head>
+<body>
+<div class="bar">
+  <a class="back" href="./">‹ Trang chính</a>
+  <span class="fn" id="fname">Đang tải dữ liệu…</span>
+  <button class="btn pri" id="bPrint" disabled>Tải PDF</button>
+</div>
+<div class="warnbox" id="warn"></div>
+<div class="loading" id="loading">Đang dựng báo cáo…</div>
+<div id="pages"></div>
+<div id="measure"></div>
+
+<script>
+"use strict";
+/* ============================== defaults ============================== */
+const DEF = {
+  groups: [
+    {ma:"01", ten:"Hạ tầng Trọng điểm & Cụm APEC 2027 Phú Quốc", ngan:"Hạ tầng & APEC", uutien:1, dactinh:"Mốc tiến độ cố định gắn sự kiện APEC 2027", tukhoa:"APEC; Cảng hàng không; Cảng HK; ORAT; Nhà ga T2; LRT; MRO"},
+    {ma:"02", ten:"Kinh doanh & Hệ sinh thái Số", ngan:"Kinh doanh & HST số", uutien:2, dactinh:"Đo bằng chỉ tiêu kinh doanh / người dùng", tukhoa:"Sun Signature; Visit Vietnam"},
+    {ma:"03", ten:"Tài chính & Huy động vốn", ngan:"Tài chính & Vốn", uutien:2, dactinh:"Phụ thuộc cấp phép · lộ trình thị trường vốn", tukhoa:"VNDA; Tài sản mã hóa; TSMH; IPO; giá DVHK; chính sách giá"},
+    {ma:"04", ten:"Nền tảng Quản trị & Pháp lý", ngan:"Quản trị & Pháp lý", uutien:3, dactinh:"Chuyển đổi hệ thống quản trị nội bộ", tukhoa:"SCP; HRP; đánh giá hiệu quả; PTDA; pháp lý"},
+    {ma:"05", ten:"Đào tạo – Học viện", ngan:"Học viện", uutien:3, dactinh:"Đưa cơ sở đào tạo vào vận hành", tukhoa:"Học viện"}],
+  status: {"chua bat dau":"none","dang thuc hien":"run","co vuong mac":"run","tam dung":"warn","da hoan thanh":"done","hoan thanh":"done"},
+  params: {near:30, window:60, minPct:80, nearTask:7, windowTask:14, groupNone:50, clip:true, pctMode:"da", packGroups:true, detailAlerts:"sum"},
+  info: {donvi:"Văn phòng Ban Điều hành", tieude:"Báo cáo Tổng thể Danh mục Dự án Trọng điểm", trinh:"Tổng Giám đốc", chantrang:"Tập đoàn Sun Group · Báo cáo Tổng thể Danh mục Dự án Trọng điểm trình Tổng Giám đốc", ghichu:""},
+  qc: {ma:[1,10,"Mã DA"], ten:[2,80,"Tên dự án"], gd:[1,40,"Giai đoạn"], mota:[3,160,"Mô tả dự án"], moc:[6,300,"Mốc chính"], gdda:[1,40,"Giám đốc dự án"], vm:[3,200,"Vướng mắc"], dx:[3,200,"Đề xuất"],
+       dv:[2,60,"Đầu việc"], mtdv:[2,80,"Mục tiêu đầu việc"], nhan:[1,20,"Nhãn %"], kq:[3,160,"Kết quả"], kh:[2,120,"KH tuần tới"], pt:[1,30,"Phụ trách"]},
+  rules: {
+    QUA_HAN:{name:"Quá hạn", on:true, lv:3, top:true, t:"{moc}: quá hạn {ngay} ({so_ngay} ngày).", p:"Báo cáo nguyên nhân, đề xuất hạn mới và biện pháp khắc phục."},
+    SAT_HAN:{name:"Sát hạn", on:true, lv:2, top:true, t:"{moc} còn {so_ngay} ngày ({ngay}).", p:"Rà soát đường găng, xác nhận khả năng đạt mốc trước {ngay}."},
+    PCT_THAP:{name:"% thấp so với hạn", on:true, lv:2, top:true, t:"{moc}: còn {so_ngay} ngày đến hạn nhưng mới đạt {pct}.", p:"Chốt phạm vi chắc chắn hoàn thành trước hạn; bổ sung nguồn lực."},
+    TAM_DUNG:{name:"Tạm dừng", on:true, lv:2, top:true, t:"Trạng thái “{trang_thai}”.", p:"Làm rõ nguyên nhân và điều kiện để tiếp tục."},
+    VUONG_MAC_TRONG:{name:"Vướng mắc chưa mô tả", on:true, lv:1, top:false, t:"Trạng thái “Có vướng mắc” nhưng chưa mô tả vướng mắc.", p:"Bổ sung nội dung vướng mắc và hỗ trợ cần."},
+    THIEU_DU_LIEU:{name:"Thiếu dữ liệu", on:true, lv:1, top:false, t:"Chưa cập nhật: {thieu}.", p:"Yêu cầu Ban Dự án cập nhật đầy đủ trong kỳ tới."},
+    NHOM_CHUA_CAP_NHAT:{name:"Nhóm chưa cập nhật", on:true, lv:2, top:true, t:"Nhóm {nhom}: {so_chua}/{tong} dự án chưa cập nhật.", p:""}},
+  notes: {max:5, minLv:2, auto:true, manual:[]},
+  cards: {TONG_DA:{on:false, o:1, t:"Danh mục trọng điểm"}, CO_TRANG_THAI:{on:false, o:2, t:"Có báo cáo trạng thái"},
+          CO_PCT:{on:false, o:3, t:"Có tỷ lệ hoàn thành định lượng"}, MOC_SAT_HAN:{on:false, o:4, t:"Mốc đến hạn trong {sat_han} ngày"},
+          CAN_CHU_Y:{on:false, o:5, t:"Dự án cần chú ý"}},
+};
+const DEFAULT_LOGO = "";
+const HEALTH = [["done","Hoàn thành","#2e7d4f"],["ok","Đúng tiến độ","#3c6ea6"],["warn","Cảnh báo","#e0a100"],["over","Quá hạn","#b3261e"],["none","Chưa cập nhật","#d9d1bf"]];
+const HNAME = Object.fromEntries(HEALTH.map(h => [h[0], h[1]]));
+
+/* ============================== helpers ============================== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm = s => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").toLowerCase().replace(/\s+/g," ").trim();
+const blank = v => v === null || v === undefined || String(v).trim() === "";
+const yes = v => !["khong","no","0","false","tat"].includes(norm(v));
+const lvOf = v => { const n = norm(v); return n.startsWith("cao") ? 3 : n.startsWith("thap") ? 1 : 2; };
+const DAY = 864e5;
+const mkDate = (y,m,d) => { if (y < 1990 || y > 2100) return null; const t = Date.UTC(y,m-1,d), x = new Date(t); return (x.getUTCMonth()===m-1 && x.getUTCDate()===d) ? t : null; };
+const fmtD = t => { const x = new Date(t); return String(x.getUTCDate()).padStart(2,"0")+"/"+String(x.getUTCMonth()+1).padStart(2,"0")+"/"+x.getUTCFullYear(); };
+const fmtDM = t => fmtD(t).slice(0,5);
+const fmtN = (n, d=0) => Number(n).toLocaleString("vi-VN", {maximumFractionDigits:d});
+const todayUTC = () => { const n = new Date(); return Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()); };
+const fill = (tpl, v) => String(tpl || "").replace(/\{(\w+)\}/g, (m, k) => v[k] ?? "");
+const short = n => { let s = String(n).split(/\s[–-]\s/)[0].trim(); return s.length > 24 ? s.slice(0, 22) + "…" : s; };
+
+function toDate(v){
+  if (blank(v)) return null;
+  if (typeof v === "number" && v > 20000 && v < 80000) return Date.UTC(1899,11,30) + Math.round(v)*DAY;
+  const m = String(v).match(/(\d{1,2})\s*[\/.\-]\s*(\d{1,2})\s*[\/.\-]\s*(\d{4})/);
+  return m ? mkDate(+m[3], +m[2], +m[1]) : null;
+}
+function toPct(v){
+  if (blank(v)) return null;
+  let n = typeof v === "number" ? v : parseFloat(String(v).replace(",", ".").replace("%",""));
+  if (isNaN(n)) return null;
+  if (typeof v === "number" ? n <= 1 : (!String(v).includes("%") && n <= 1)) n *= 100;
+  return Math.max(0, Math.min(100, n));
+}
+function lines(v){
+  if (blank(v)) return [];
+  return String(v).split(/\r?\n/).map(s => s.replace(/\t/g," ").trim()).filter(Boolean);
+}
+const debullet = s => s.replace(/^[-–•·*•]+\s*/, "").trim();
+/* apply input standard → {L (lines), cut (# lines hidden), over} */
+function fit(v, q, clip){
+  const L = lines(v), total = L.join("").length;
+  const over = !!q && (L.length > q[0] || total > q[1]);
+  if (!over || !clip) return {L, over, cut:0};
+  const out = []; let used = 0, full = 0;
+  for (const s of L){
+    if (out.length >= q[0] || used >= q[1]) break;
+    const room = q[1] - used;
+    if (s.length <= room){ out.push(s); used += s.length; full++; }
+    else { const t = s.slice(0, room).replace(/\s+\S*$/, ""); if (t.length > 15) out.push(t + "…"); used = q[1]; }
+  }
+  return {L: out, over, cut: L.length - full};
+}
+function milestones(text, bad){
+  const out = [];
+  for (const raw of lines(text)){
+    const line = debullet(raw), label = (line.split(":")[0] || line).trim();
+    const re = /(\d{1,2})\s*\/\s*(\d{1,2})\s*\/\s*(\d{4})/g; let m;
+    while ((m = re.exec(line))){ const t = mkDate(+m[3], +m[2], +m[1]); if (t) out.push({label, t}); else bad.push(m[0]); }
+    const masked = line.replace(re, " ");
+    const re2 = /th[aá]ng\s*(\d{1,2})\s*\/\s*(\d{4})/gi;
+    while ((m = re2.exec(masked))){ const mo = +m[1], y = +m[2]; const t = mo === 12 ? mkDate(y,12,31) : (mkDate(y, mo+1, 1) ?? 0) - DAY; if (t > 0) out.push({label, t}); }
+    for (const b of masked.match(/\b\d{1,2}\/(\d{5,6}|0\d{3})\b/g) || []) bad.push(b);
+  }
+  return out;
+}
+
+/* ============================== workbook reading ============================== */
+function grid(ws){  // absolute rows/cols, merged cells filled with the top-left value
+  if (ws && ws.aoa){ const rows = ws.aoa.map(r => r.slice()); rows.mergeTop = new Set(); rows.merges = []; return rows; }
+  if (!ws || !ws["!ref"]) return [];
+  const R = XLSX.utils.decode_range(ws["!ref"]), rows = [];
+  for (let r = 0; r <= R.e.r; r++){ const row = []; for (let c = 0; c <= R.e.c; c++){ const x = ws[XLSX.utils.encode_cell({r, c})]; row.push(x ? (x.v ?? null) : null); } rows.push(row); }
+  const top = new Set();
+  for (const mg of ws["!merges"] || []){
+    const v = rows[mg.s.r]?.[mg.s.c] ?? null; top.add(mg.s.r + ":" + mg.s.c);
+    for (let r = mg.s.r; r <= mg.e.r; r++) for (let c = mg.s.c; c <= mg.e.c; c++) if (rows[r]) rows[r][c] = v;
+  }
+  rows.mergeTop = top; rows.merges = ws["!merges"] || [];
+  return rows;
+}
+function findHeader(rows, tests, from=0){
+  for (let i = from; i < rows.length; i++){ const r = (rows[i] || []).map(norm); if (tests.every(t => r.some(c => t(c)))) return i; }
+  return -1;
+}
+const colIdx = (H, p) => H.map(norm).findIndex(p);
+function takeRows(rows, h){ const out = []; for (let i = h+1; i < rows.length; i++){ const r = rows[i] || []; if (blank(r[0]) && blank(r[1])) break; out.push(r); } return out; }
+
+function parseConfig(wb, warns){
+  const cfg = JSON.parse(JSON.stringify(DEF)); cfg.fromSheet = false;
+  const name = wb.SheetNames.find(n => norm(n) === "danh muc");
+  if (!name){ warns.push("File không có sheet “Danh mục” – dùng cấu hình mặc định."); return cfg; }
+  const rows = grid(wb.Sheets[name]); cfg.fromSheet = true;
+  let h = findHeader(rows, [c => c === "ten nhom"]);
+  if (h >= 0){ const H = rows[h], ci = p => colIdx(H, p);
+    const iMa = ci(c => c === "ma"), iT = ci(c => c === "ten nhom"), iN = ci(c => c.startsWith("ten ngan")), iU = ci(c => c.startsWith("uu tien")), iD = ci(c => c.startsWith("dac tinh")), iK = ci(c => c.startsWith("tu khoa"));
+    const g = takeRows(rows, h).filter(r => !blank(r[iT])).map((r, k) => ({ma: blank(r[iMa]) ? String(k+1).padStart(2,"0") : String(r[iMa]).padStart(2,"0"), ten:String(r[iT]).trim(), ngan: blank(r[iN]) ? String(r[iT]).trim() : String(r[iN]).trim(), uutien: +r[iU] || 9, dactinh: r[iD] || "", tukhoa: r[iK] || ""}));
+    if (g.length) cfg.groups = g; }
+  h = findHeader(rows, [c => c === "trang thai", c => c.startsWith("phan loai")]);
+  if (h >= 0){ const H = rows[h], iS = colIdx(H, c => c === "trang thai"), iP = colIdx(H, c => c.startsWith("phan loai"));
+    for (const r of takeRows(rows, h)){ if (blank(r[iS])) continue; const p = norm(r[iP]);
+      cfg.status[norm(r[iS])] = p.includes("hoan thanh") ? "done" : p.includes("canh bao") ? "warn" : p.includes("chua") ? "none" : "run"; } }
+  h = findHeader(rows, [c => c === "tham so", c => c === "gia tri"]);
+  if (h >= 0){ const H = rows[h], iK = colIdx(H, c => c === "tham so"), iV = colIdx(H, c => c === "gia tri"), P = cfg.params;
+    for (const r of takeRows(rows, h)){ const k = norm(r[iK]), v = r[iV]; if (blank(v)) continue;
+      if (k.includes("sat han") && k.includes("dau viec")) P.nearTask = +v; else if (k.includes("cua so") && k.includes("dau viec")) P.windowTask = +v;
+      else if (k.includes("sat han")) P.near = +v; else if (k.includes("cua so")) P.window = +v;
+      else if (k.includes("nguong nhom")) P.groupNone = toPct(v); else if (k.includes("nguong")) P.minPct = toPct(v);
+      else if (k.includes("vuot quy chuan")) P.clip = !norm(v).includes("giu nguyen");
+      else if (k.includes("cach tinh")) P.pctMode = norm(v).includes("trung binh") ? "avg" : "da";
+      else if (k.includes("gom")) P.packGroups = yes(v);
+      else if (k.includes("bang chi tiet")) { const n = norm(v); P.detailAlerts = n.startsWith("an") ? "off" : n.includes("day du") ? "full" : "sum"; } } }
+  h = findHeader(rows, [c => c === "truong", c => c === "gia tri"]);
+  if (h >= 0){ const H = rows[h], iK = colIdx(H, c => c === "truong"), iV = colIdx(H, c => c === "gia tri");
+    for (const r of takeRows(rows, h)){ const k = norm(r[iK]), v = r[iV]; if (blank(v)) continue;
+      if (k.includes("don vi")) cfg.info.donvi = String(v); else if (k.includes("tieu de")) cfg.info.tieude = String(v);
+      else if (k === "trinh") cfg.info.trinh = String(v); else if (k.includes("chan trang")) cfg.info.chantrang = String(v); else if (k.includes("ghi chu")) cfg.info.ghichu = String(v); } }
+  h = findHeader(rows, [c => c === "cot", c => c.startsWith("so dong")]);
+  if (h >= 0){ const H = rows[h], iC = colIdx(H, c => c === "cot"), iL = colIdx(H, c => c.startsWith("so dong")), iK = colIdx(H, c => c.startsWith("so ky tu"));
+    for (const r of takeRows(rows, h)){ const key = qcKey(norm(r[iC])); if (!key) continue;
+      if (+r[iL] > 0) cfg.qc[key][0] = +r[iL]; if (+r[iK] > 0) cfg.qc[key][1] = +r[iK]; } }
+  h = findHeader(rows, [c => c === "ma luat"]);
+  if (h >= 0){ const H = rows[h], ci = p => colIdx(H, p);
+    const iM = ci(c => c === "ma luat"), iB = ci(c => c === "bat"), iL = ci(c => c === "muc"), iTop = ci(c => c.startsWith("len trang")), iT = ci(c => c.startsWith("mau canh bao")), iP = ci(c => c.startsWith("mau de xuat"));
+    for (const r of takeRows(rows, h)){ const code = String(r[iM] || "").trim().toUpperCase(); const R = cfg.rules[code];
+      if (!R){ if (code) warns.push(`Luật cảnh báo “${code}” không được hỗ trợ – bỏ qua.`); continue; }
+      const iNm = colIdx(H, c => c === "ten luat"); if (iNm >= 0 && !blank(r[iNm])) R.name = String(r[iNm]);
+      if (iB >= 0 && !blank(r[iB])) R.on = yes(r[iB]); if (iL >= 0 && !blank(r[iL])) R.lv = lvOf(r[iL]);
+      if (iTop >= 0 && !blank(r[iTop])) R.top = yes(r[iTop]); if (iT >= 0 && !blank(r[iT])) R.t = String(r[iT]); if (iP >= 0 && r[iP] !== null) R.p = String(r[iP] ?? ""); } }
+  h = findHeader(rows, [c => c === "thiet lap", c => c === "gia tri"]);
+  if (h >= 0){ const H = rows[h], iK = colIdx(H, c => c === "thiet lap"), iV = colIdx(H, c => c === "gia tri");
+    for (const r of takeRows(rows, h)){ const k = norm(r[iK]), v = r[iV]; if (blank(v)) continue;
+      if (k.includes("so muc")) cfg.notes.max = +v; else if (k.includes("muc toi thieu")) cfg.notes.minLv = lvOf(v); else if (k.includes("tu dong")) cfg.notes.auto = yes(v); } }
+  h = findHeader(rows, [c => c === "ma the"]);
+  if (h >= 0){ const H = rows[h], ci = p => colIdx(H, p);
+    const iM = ci(c => c === "ma the"), iT = ci(c => c.startsWith("ten hien thi")), iS = ci(c => c.startsWith("hien thi")), iO = ci(c => c === "thu tu");
+    for (const r of takeRows(rows, h)){ const code = String(r[iM] || "").trim().toUpperCase(), C = cfg.cards[code];
+      if (!C){ if (code) warns.push(`Thẻ KPI “${code}” không được hỗ trợ – bỏ qua.`); continue; }
+      C.on = iS >= 0 && !blank(r[iS]) && yes(r[iS]); if (iO >= 0 && !blank(r[iO])) C.o = +r[iO]; if (iT >= 0 && !blank(r[iT])) C.t = String(r[iT]); } }
+  h = findHeader(rows, [c => c.startsWith("noi dung luu y")]);
+  if (h >= 0){ const H = rows[h], iO = colIdx(H, c => c === "thu tu"), iN = colIdx(H, c => c.startsWith("noi dung luu y")), iL = colIdx(H, c => c === "muc"), iS = colIdx(H, c => c.startsWith("hien thi"));
+    for (let i = h+1; i < rows.length; i++){ const r = rows[i] || []; if (blank(r[iN])) { if (blank(r[iO])) break; continue; }
+      if (iS >= 0 && !blank(r[iS]) && !yes(r[iS])) continue;
+      cfg.notes.manual.push({o: +r[iO] || 99, t: String(r[iN]), lv: lvOf(r[iL])}); }
+    cfg.notes.manual.sort((a,b) => a.o - b.o); }
+  return cfg;
+}
+function qcKey(n){
+  if (n === "ma da" || n === "ma du an") return "ma"; if (n.startsWith("ten du an")) return "ten"; if (n.startsWith("giai doan")) return "gd";
+  if (n.startsWith("giam doc")) return "gdda"; if (n.startsWith("nhan")) return "nhan"; if (n.startsWith("phu trach")) return "pt";
+  if (n.startsWith("mo ta")) return "mota"; if (n.startsWith("moc")) return "moc"; if (n.includes("vuong mac")) return "vm";
+  if (n.startsWith("de xuat")) return "dx"; if (n.startsWith("muc tieu dau viec")) return "mtdv"; if (n.startsWith("dau viec")) return "dv";
+  if (n.startsWith("ket qua")) return "kq"; if (n.includes("tuan toi") || n.startsWith("ke hoach") || n.startsWith("kh ")) return "kh";
+  if (n.startsWith("noi dung")) return "moc"; return null;
+}
+function parseKpis(wb){
+  const name = wb.SheetNames.find(n => norm(n) === "chi so"); if (!name) return [];
+  const rows = grid(wb.Sheets[name]), h = findHeader(rows, [c => c.startsWith("ten chi so")]); if (h < 0) return [];
+  const H = rows[h], ci = p => colIdx(H, p);
+  const iT = ci(c => c.startsWith("ten chi so")), iV = ci(c => c === "gia tri"), iU = ci(c => c.startsWith("don vi")), iG = ci(c => c.startsWith("ghi chu")), iM = ci(c => c === "muc"), iS = ci(c => c.startsWith("hien thi")), iO = ci(c => c === "thu tu");
+  const out = [];
+  for (let i = h+1; i < rows.length; i++){ const r = rows[i] || []; if (blank(r[iT])) continue;
+    if (iS < 0 || blank(r[iS]) || !yes(r[iS])) continue;   // default: hidden
+    out.push({ten:String(r[iT]), val:r[iV], unit: iU>=0 ? r[iU] : "", note: iG>=0 ? r[iG] : "", lvl: iM>=0 ? norm(r[iM]) : "", o: iO>=0 && !blank(r[iO]) ? +r[iO] : 100 + i}); }
+  return out;
+}
+
+/* main sheet: one project spans several rows (merged project cells), one task per row */
+function parseMain(wb, warns){
+  const tests = [c => c.startsWith("ten du an")];
+  let name = wb.SheetNames.find(n => norm(n) === "chi tiet da"), rows, h = -1;
+  if (name){ rows = grid(wb.Sheets[name]); h = findHeader(rows, tests); }
+  if (h < 0) for (const n of wb.SheetNames){ const r = grid(wb.Sheets[n]); const k = findHeader(r, tests); if (k >= 0){ name = n; rows = r; h = k; break; } }
+  if (h < 0) throw new Error("Không tìm thấy bảng dự án: cần một sheet có dòng tiêu đề chứa “Tên dự án”.");
+  const H = rows[h], ci = p => colIdx(H, p), has = i => i >= 0;
+  const C = {
+    ma: ci(c => c === "ma da" || c === "ma du an" || c === "ma"), ten: ci(c => c.startsWith("ten du an")), nhom: ci(c => c === "nhom"),
+    gd: ci(c => c.startsWith("giai doan")), mota: ci(c => c.startsWith("mo ta")), moc: ci(c => c.startsWith("moc chinh")),
+    handa: ci(c => c.startsWith("han") && (c.endsWith(" da") || c.includes("du an"))), pctda: ci(c => c.includes("%") && (c.endsWith(" da") || c.includes("du an"))),
+    tt: ci(c => c.startsWith("trang thai")), gdda: ci(c => c.startsWith("giam doc du an") || c === "gdda"),
+    vm: ci(c => c.includes("vuong mac")), dx: ci(c => c.startsWith("de xuat")),
+    stt: ci(c => c === "stt"), dv: ci(c => c === "dau viec" || c.startsWith("dau viec /")), mtdv: ci(c => c.startsWith("muc tieu dau viec")),
+    pctdv: ci(c => c.includes("%") && c.includes("dau viec")), kq: ci(c => c.startsWith("ket qua")),
+    kh: ci(c => c.includes("tuan toi") || c.startsWith("ke hoach") || c.startsWith("kh ")), handv: ci(c => c.startsWith("han") && c.includes("dau viec")),
+    pt: ci(c => c.startsWith("phu trach")), nhan: ci(c => c.startsWith("nhan")),
+  };
+  // legacy one-row-per-project layout (v2): "Nội dung cần hoàn thành", "Hạn hoàn thành", "% hoàn thành"
+  const legacy = !has(C.dv);
+  if (legacy){
+    C.moc = has(C.moc) ? C.moc : ci(c => c.startsWith("noi dung"));
+    if (!has(C.handa)) C.handa = ci(c => c.startsWith("han"));
+    if (!has(C.pctda)) C.pctda = ci(c => c.includes("%"));
+  }
+  let ky = null, chot = null;
+  for (let i = 0; i < h; i++){ const r = rows[i] || [];
+    r.forEach((c, j) => { const n = norm(c); if (n === "ky bao cao" && !blank(r[j+1])) ky = r[j+1]; if (n === "ngay chot" && !blank(r[j+1])) chot = toDate(r[j+1]); }); }
+  if (typeof ky === "number") ky = fmtD(toDate(ky));
+  const g = (r, k) => has(C[k]) ? r[C[k]] : null;
+  const projects = []; let cur = null;
+  for (let i = h+1; i < rows.length; i++){
+    const r = rows[i] || [];
+    const nm = g(r, "ten"), ma = g(r, "ma");
+    const taskHas = ["dv","mtdv","pctdv","nhan","kq","kh","handv","pt"].some(k => !blank(g(r, k)));
+    const startsNew = !blank(nm) && (!cur || rows.mergeTop.has(i + ":" + C.ten) || String(nm).trim() !== cur.ten || (!blank(ma) && String(ma).trim() !== String(cur.ma ?? "")));
+    if (startsNew){
+      cur = {row:i+1, ma: blank(ma) ? null : String(ma).trim(), ten:String(nm).trim(), nhom:g(r,"nhom"), gd:g(r,"gd"), mota:g(r,"mota"), moc:g(r,"moc"),
+             dueRaw:g(r,"handa"), pctRaw:g(r,"pctda"), tt:g(r,"tt"), gdda:g(r,"gdda"), vm:g(r,"vm"), dx:g(r,"dx"), tasks:[]};
+      projects.push(cur);
+    } else if (!cur || (!taskHas && blank(nm))) continue;
+    if (legacy){ cur.tasks.push({row:i+1, dv:"Tiến độ chung", kq:g(r,"kq"), kh:g(r,"kh")}); continue; }
+    if (taskHas) cur.tasks.push({row:i+1, stt:g(r,"stt"), dv:g(r,"dv"), mtdv:g(r,"mtdv"), pctRaw:g(r,"pctdv"), nhan:g(r,"nhan"), kq:g(r,"kq"), kh:g(r,"kh"), dueRaw:g(r,"handv"), pt:g(r,"pt")});
+  }
+  if (!projects.length) throw new Error(`Sheet “${name}” chưa có dự án nào bên dưới dòng tiêu đề.`);
+  if (legacy) warns.push("File theo mẫu cũ (1 dòng/dự án) – mỗi dự án hiển thị 1 đầu việc “Tiến độ chung”.");
+  return {sheet:name, projects, ky, chot};
+}
+
+/* ============================== analysis ============================== */
+function assignGroups(projects, cfg, warns){
+  const G = cfg.groups.map(g => ({...g, kws: String(g.tukhoa||"").split(/[;,\n]/).map(norm).filter(Boolean), items:[]}));
+  const other = {ma:"99", ten:"Dự án khác", ngan:"Khác", uutien:99, dactinh:"Chưa xác định nhóm – chọn cột Nhóm hoặc bổ sung từ khóa trong sheet Danh mục", kws:[], items:[], other:true};
+  for (const p of projects){
+    let g = null;
+    if (!blank(p.nhom)){ const n = norm(p.nhom);
+      g = G.find(x => norm(x.ten) === n || norm(x.ngan) === n || x.ma === String(p.nhom).trim().padStart(2,"0"));
+      if (!g) warns.push(`Dòng ${p.row} (${p.ten}): nhóm “${p.nhom}” không có trong Danh mục – đã gán theo từ khóa.`); }
+    if (!g){ const n = norm(p.ten); g = G.find(x => x.kws.some(k => n.includes(k))); }
+    (g || other).items.push(p);
+  }
+  if (other.items.length) warns.push(`${other.items.length} dự án chưa xác định được nhóm → “Dự án khác”: ${other.items.map(i=>i.ten).join("; ")}.`);
+  const out = G.filter(g => g.items.length).sort((a,b) => a.uutien - b.uutien || a.ma.localeCompare(b.ma));
+  if (other.items.length) out.push(other);
+  out.forEach((g, gi) => { g.no = g.other ? "—" : g.ma; g.id = "g" + (gi+1);
+    g.items.forEach((p, k) => { p.group = g; p.letter = k < 26 ? String.fromCharCode(65 + k) : String(k + 1); p.code = p.ma || ((g.other ? "K" : String(+g.ma || gi+1)) + "." + (k+1)); p.anchor = "p" + (gi+1) + "-" + (k+1); }); });
+  return out;
+}
+
+function analyse(p, cfg, cut, warns){
+  const P = cfg.params, RU = cfg.rules, bad = [], days = t => Math.round((t - cut) / DAY);
+  p.ms = milestones(p.moc, bad); milestones(p.mota, bad).forEach(m => p.ms.push(m));
+  if (bad.length) warns.push(`Dòng ${p.row} (${p.ten}): ngày không hợp lệ trong nội dung: ${[...new Set(bad)].join(", ")}.`);
+  let due = toDate(p.dueRaw);
+  if (!blank(p.dueRaw) && due === null && norm(p.dueRaw) !== "na") warns.push(`Dòng ${p.row} (${p.ten}): không đọc được hạn “${p.dueRaw}”.`);
+  if (due !== null && p.ms.length && !p.ms.some(m => m.t === due)){
+    const x = new Date(due), sw = mkDate(x.getUTCFullYear(), x.getUTCDate(), x.getUTCMonth()+1);
+    if (sw && p.ms.some(m => m.t === sw)){ warns.push(`Dòng ${p.row} (${p.ten}): hạn ${fmtD(due)} có vẻ đảo ngày/tháng – đã dùng ${fmtD(sw)}.`); due = sw; }
+  }
+  p.due = due;
+  const sn = norm(p.tt); const cls = blank(p.tt) ? "none" : (cfg.status[sn] || "run"); p.cls = cls; p.done = cls === "done";
+  // tasks
+  for (const t of p.tasks){
+    t.pct = toPct(t.pctRaw); t.due = toDate(t.dueRaw);
+    if (!blank(t.dueRaw) && t.due === null) warns.push(`Dòng ${t.row} (${p.ten}): không đọc được hạn đầu việc “${t.dueRaw}”.`);
+    t.done = p.done || t.pct === 100; t.alerts = [];
+  }
+  const tp = p.tasks.filter(t => t.pct !== null);
+  const avg = tp.length ? tp.reduce((s, t) => s + t.pct, 0) / tp.length : null;
+  p.pct = P.pctMode === "avg" ? avg : (toPct(p.pctRaw) ?? avg);
+  if (p.pct === null && p.done) p.pct = 100;
+  const all = [...p.ms]; if (due !== null && !all.some(m => m.t === due)) all.push({label:"Hạn hoàn thành dự án", t:due});
+  all.sort((a,b) => a.t - b.t); p.allMs = all; p.passed = all.filter(m => m.t <= cut).length;
+  p.finalDue = due ?? (all.length ? all[all.length-1].t : null);
+  p.next = all.find(m => m.t > cut) || null;
+  // ---- alerts
+  const A = []; const add = (code, vars, extra={}) => { const R = RU[code]; if (!R || !R.on) return;
+    A.push({code, lv:R.lv, top:R.top, t:fill(R.t, vars), p:fill(R.p, vars), d: extra.d ?? 999, task: extra.task ?? null, s: extra.s ?? null, vars}); };
+  const V = (o) => ({du_an:p.ten, trang_thai:p.tt ?? "", ...o});
+  if (!p.done && p.finalDue !== null && p.finalDue < cut && (p.pct ?? 0) < 100)
+    add("QUA_HAN", V({moc:"Dự án", ngay:fmtD(p.finalDue), so_ngay:-days(p.finalDue)}), {d:days(p.finalDue), s:`Dự án (${fmtDM(p.finalDue)})`});
+  if (!p.done && p.next && days(p.next.t) <= P.near)
+    add("SAT_HAN", V({moc:`Mốc “${p.next.label}”`, ngay:fmtD(p.next.t), so_ngay:days(p.next.t)}), {d:days(p.next.t), s:`${short(p.next.label)} (${fmtDM(p.next.t)})`});
+  if (!p.done && due !== null && due >= cut && days(due) <= P.window && p.pct !== null && p.pct < P.minPct)
+    add("PCT_THAP", V({moc:"Dự án", ngay:fmtD(due), so_ngay:days(due), pct:fmtN(p.pct,1)+"%"}), {d:days(due), s:`Dự án ${fmtN(p.pct,1)}%/${days(due)} ngày`});
+  p.tasks.forEach((t, k) => { if (t.done || t.due === null) return; const nm = `Đầu việc ${k+1}${blank(t.dv) ? "" : " “" + debullet(String(t.dv)) + "”"}`;
+    const sn_ = "ĐV" + (k+1);
+    if (t.due < cut && (t.pct ?? 0) < 100) add("QUA_HAN", V({moc:nm, ngay:fmtD(t.due), so_ngay:-days(t.due)}), {d:days(t.due), task:k, s:`${sn_} (${fmtDM(t.due)}, ${-days(t.due)} ngày)`});
+    else if (days(t.due) <= P.nearTask) add("SAT_HAN", V({moc:nm, ngay:fmtD(t.due), so_ngay:days(t.due)}), {d:days(t.due), task:k, s:`${sn_} (${fmtDM(t.due)})`});
+    if (t.due >= cut && days(t.due) <= P.windowTask && t.pct !== null && t.pct < P.minPct) add("PCT_THAP", V({moc:nm, ngay:fmtD(t.due), so_ngay:days(t.due), pct:fmtN(t.pct,1)+"%"}), {d:days(t.due), task:k, s:`${sn_} ${fmtN(t.pct,1)}%`}); });
+  if (cls === "warn") add("TAM_DUNG", V({}));
+  if (sn === "co vuong mac" && blank(p.vm)) add("VUONG_MAC_TRONG", V({}));
+  const miss = [];
+  if (blank(p.tt)) miss.push("trạng thái");
+  if (!p.done && p.pct === null && cls !== "none") miss.push("% hoàn thành");
+  if (p.finalDue === null && !p.tasks.some(t => t.due !== null)) miss.push("hạn");
+  if (blank(p.gdda)) miss.push("GĐDA");
+  const noRes = p.tasks.filter(t => blank(t.kq)).length, noPlan = p.done ? 0 : p.tasks.filter(t => blank(t.kh)).length, n = p.tasks.length;
+  if (!n || noRes === n) miss.push("kết quả"); else if (noRes) miss.push(`kết quả (${noRes}/${n} đầu việc)`);
+  if (n && noPlan === n) miss.push("KH tuần tới"); else if (noPlan) miss.push(`KH tuần tới (${noPlan}/${n} đầu việc)`);
+  if (miss.length) add("THIEU_DU_LIEU", V({thieu:miss.join(", ")}));
+  p.alerts = A.sort((a,b) => b.lv - a.lv || a.d - b.d);
+  A.forEach(a => { if (a.task !== null) p.tasks[a.task].alerts.push(a); });
+  // ---- health
+  const updated = !blank(p.tt) || p.tasks.some(t => !blank(t.kq));
+  p.health = p.done ? "done" : A.some(a => a.code === "QUA_HAN") ? "over"
+    : (A.some(a => ["SAT_HAN","PCT_THAP","TAM_DUNG"].includes(a.code)) || sn === "co vuong mac") ? "warn"
+    : !updated || cls === "none" ? "none" : "ok";
+  // ---- input standards
+  const Q = cfg.qc; p.fit = {};
+  for (const k of ["mota","moc","vm","dx"]){ p.fit[k] = fit(p[k], Q[k], P.clip); if (p.fit[k].over) overWarn(warns, p.row, p.ten, Q[k], p[k], P.clip); }
+  for (const k of ["ma","ten","gd","gdda"]) if (fit(p[k], Q[k], false).over) overWarn(warns, p.row, p.ten, Q[k], p[k], false);
+  for (const t of p.tasks){ t.fit = {};
+    for (const k of ["dv","mtdv","kq","kh"]){ t.fit[k] = fit(t[k], Q[k], P.clip); if (t.fit[k].over) overWarn(warns, t.row, p.ten, Q[k], t[k], P.clip); }
+    for (const k of ["nhan","pt"]) if (fit(t[k], Q[k], false).over) overWarn(warns, t.row, p.ten, Q[k], t[k], false); }
+}
+function overWarn(warns, row, name, q, v, clip){ const L = lines(v);
+  warns.push(`Dòng ${row} (${name}): “${q[2]}” vượt quy chuẩn – ${L.length} dòng / ${L.join("").length} ký tự (tối đa ${q[0]} / ${q[1]})${clip ? ", đã cắt bớt" : ""}.`); }
+
+/* ============================== rendering pieces ============================== */
+const pill = h => `<span class="hp h-${h}">${HNAME[h]}</span>`;
+const more = f => f.cut > 0 ? `<div class="more">… còn ${f.cut} ý – xem file Excel</div>` : "";
+function pieSvg(counts, total){
+  const R = 54, cx = 59, cy = 59; let a0 = -Math.PI/2, s = `<svg viewBox="0 0 118 118" role="img" aria-label="Sức khỏe tiến độ">`;
+  const parts = HEALTH.filter(h => counts[h[0]] > 0);
+  if (parts.length === 1) s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="${parts[0][2]}"><title>${parts[0][1]}: ${total}</title></circle>`;
+  else for (const [k, name, col] of parts){
+    const a1 = a0 + counts[k] / total * 2 * Math.PI, large = a1 - a0 > Math.PI ? 1 : 0;
+    s += `<path d="M${cx},${cy} L${cx + R*Math.cos(a0)},${cy + R*Math.sin(a0)} A${R},${R} 0 ${large} 1 ${cx + R*Math.cos(a1)},${cy + R*Math.sin(a1)} Z" fill="${col}" stroke="#fff" stroke-width="2" stroke-linejoin="round"><title>${name}: ${counts[k]}</title></path>`;
+    a0 = a1; }
+  return s + "</svg>";
+}
+function projCell(p, cont){
+  const title = `<div class="pcode">${esc(p.code)}</div><div class="pname">${esc(p.letter)}. ${esc(p.ten)}</div>`;
+  if (cont) return `<td class="pc" rowspan="__RS__">${title}<div class="cont">(tiếp theo)</div></td>`;
+  const ms = p.fit.moc.L.map(debullet);
+  return `<td class="pc" rowspan="__RS__">${title}`
+    + (blank(p.gd) ? "" : `<div class="pgd">${esc(p.gd)}</div>`)
+    + (p.fit.mota.L.length ? `<div class="pdesc">${p.fit.mota.L.map(s => esc(debullet(s))).join("<br>")}${more(p.fit.mota)}</div>` : "")
+    + (ms.length ? `<div class="pms">${ms.map(s => `<span class="ml">${esc(s)}</span>`).join("")}${more(p.fit.moc)}</div>` : "")
+    + `<div class="pmeta">${pill(p.health)}${p.pct !== null ? ` <span class="pct">${fmtN(p.pct,1)}%</span>` : ""}${p.due !== null ? ` · Hạn ${fmtD(p.due)}` : ""}</div></td>`;
+}
+function vxCell(p, cont){
+  if (cont) return `<td class="vx" rowspan="__RS__"><p class="cont">Xem trang trước</p></td>`;
+  const auto = a => `<li class="auto"><span class="auto-tag">Tự động</span>${esc(a.t)}</li>`, autoP = a => `<li class="auto"><span class="auto-tag">Tự động</span>${esc(a.p)}</li>`;
+  const uniq = (arr, key) => { const seen = new Set(); return arr.filter(a => { const k = key(a); if (seen.has(k)) return false; seen.add(k); return true; }); };
+  const mode = CFG.params.detailAlerts; let AL = mode === "off" ? [] : p.alerts;
+  if (mode === "sum"){   // one line per rule
+    const by = {}; AL.forEach(a => (by[a.code] = by[a.code] || []).push(a));
+    AL = Object.values(by).map(list => list.length === 1 ? list[0] : {...list[0], t: `${CFG.rules[list[0].code].name}: ${list.map(a => a.s || a.vars.moc).join(", ")}.`});
+  }
+  const v = p.fit.vm.L.map(s => `<li>${esc(debullet(s))}</li>`).concat(AL.map(auto));
+  const x = p.fit.dx.L.map(s => `<li>${esc(debullet(s))}</li>`).concat(uniq(AL.filter(a => a.p), a => mode === "sum" ? a.code : a.p).map(autoP));
+  return `<td class="vx" rowspan="__RS__"><h4 class="v">Vướng mắc</h4>${v.length ? `<ul>${v.join("")}</ul>` : '<p class="na">Chưa ghi nhận</p>'}${more(p.fit.vm)}`
+    + `<h4 class="x">Đề xuất</h4>${x.length ? `<ul class="x">${x.join("")}</ul>` : '<p class="na">—</p>'}${more(p.fit.dx)}</td>`;
+}
+function richCell(f, cls, extra){
+  if (!f.L.length && !extra) return `<td class="${cls}"><p class="na">Chưa cập nhật</p></td>`;
+  const body = f.L.map((s, i) => { const t = debullet(s);
+    if (i === 0) return `<p class="main">${esc(t)}</p>`;
+    if (/^\+/.test(s.trim())) return `<p class="pos">${esc(s.trim().slice(1).trim())}</p>`;
+    return `<p>${esc(t)}</p>`; }).join("");
+  return `<td class="${cls}">${body || '<p class="na">Chưa cập nhật</p>'}${more(f)}${extra || ""}</td>`;
+}
+function taskCells(p, t, k){
+  const name = t.fit.dv.L.map(debullet).join(" ") || "Đầu việc";
+  const sttN = blank(t.stt) ? k + 1 : t.stt;
+  const hc = t.done ? "done" : t.alerts.some(a => a.code === "QUA_HAN") ? "over" : t.alerts.length ? "warn" : "";
+  const pc = t.pct !== null ? `<span class="pct">${fmtN(t.pct,1)}%</span><span class="lbl">${esc(blank(t.nhan) ? "Đầu việc" : t.nhan)}</span>` : '<span class="dash">—</span><span class="lbl">Chưa có %</span>';
+  const meta = [t.due !== null ? "Hạn: " + fmtD(t.due) : null, blank(t.pt) ? null : "Phụ trách: " + esc(t.pt)].filter(Boolean);
+  return `<td><div class="tname">${esc(sttN)}. ${esc(name)}</div>${t.fit.mtdv.L.length ? `<div class="tgoal">${t.fit.mtdv.L.map(s => esc(debullet(s))).join("<br>")}</div>` : ""}</td>`
+    + `<td class="tc ${hc}">${pc}</td>` + richCell(t.fit.kq, "kq") + richCell(t.fit.kh, "kh", meta.length ? `<div class="meta">${meta.join("<br>")}</div>` : "");
+}
+function projTbody(p, from, to, cont){
+  const tasks = p.tasks.length ? p.tasks.slice(from, to) : [null];
+  const rs = tasks.length;
+  const rows = tasks.map((t, j) => "<tr>" + (j === 0 ? projCell(p, cont) : "")
+    + (t ? taskCells(p, t, from + j) : '<td colspan="4"><p class="na">Chưa có đầu việc</p></td>')
+    + (j === 0 ? vxCell(p, cont) : "") + "</tr>").join("");
+  return `<tbody class="proj"${cont ? "" : ` id="${p.anchor}"`}>${rows.replace(/__RS__/g, rs)}</tbody>`;
+}
+const DET_COLS = `<colgroup><col style="width:16%"><col style="width:16.5%"><col style="width:7.5%"><col style="width:21%"><col style="width:19%"><col style="width:20%"></colgroup>
+  <thead><tr><th>Dự án</th><th>Đầu việc / Mục tiêu</th><th style="text-align:center">Hoàn thành</th><th>Kết quả đến hiện tại</th><th>Kế hoạch tuần tới</th><th>Vướng mắc / Đề xuất chung của dự án</th></tr></thead>`;
+
+/* ============================== pagination ============================== */
+let PAGES = [];
+function newPage(kind){
+  const pg = document.createElement("div"); pg.className = "page " + kind;
+  pg.innerHTML = `<div class="pin"><div class="pbody"></div><div class="pfoot"><span class="ft"></span><span class="pn"></span></div></div>`;
+  $("#pages").appendChild(pg); PAGES.push(pg); return pg.querySelector(".pbody");
+}
+const fits = b => b.scrollHeight <= b.clientHeight + 1;
+const frag = html => { const t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstElementChild; };
+
+let CFG = null;
+function render(data){
+  CFG = data.cfg;
+  const {cfg, groups, kpis, cut, ky, fname, sheet} = data, P = cfg.params;
+  $("#pages").innerHTML = ""; PAGES = [];
+  const projects = groups.flatMap(g => g.items), N = projects.length, nTasks = projects.reduce((s, p) => s + p.tasks.length, 0);
+  const counts = Object.fromEntries(HEALTH.map(h => [h[0], 0])); projects.forEach(p => counts[p.health]++);
+  // ---------- cover content
+  const withPct = projects.filter(p => p.pct !== null).sort((a,b) => b.pct - a.pct);
+  const upcoming = projects.flatMap(p => p.done ? [] : [...p.allMs.map(m => ({p, t:m.t})), ...p.tasks.filter(t => t.due !== null && !t.done).map(t => ({p, t:t.due}))])
+    .filter(u => u.t > cut && (u.t - cut)/DAY <= P.near).sort((a,b) => a.t - b.t);
+  const CD = cfg.cards, cards = [], tt = (c, extra) => esc(fill(c.t, {sat_han:P.near, ...extra}));
+  const card = (o, cls, l, v, sub) => cards.push({o, h:`<div class="kpi ${cls}"><div class="l">${l}</div><div class="v">${v}</div><div class="s">${sub}</div></div>`});
+  if (CD.TONG_DA.on) card(CD.TONG_DA.o, "", tt(CD.TONG_DA), `${N} <small>dự án</small>`, `${groups.filter(g => !g.other).length} nhóm · ${nTasks} đầu việc`);
+  if (CD.CO_TRANG_THAI.on) card(CD.CO_TRANG_THAI.o, "", tt(CD.CO_TRANG_THAI), `${N - counts.none}<small>/${N}</small>`, `${counts.none} dự án chưa cập nhật tiến độ`);
+  if (CD.CO_PCT.on) card(CD.CO_PCT.o, "blue", tt(CD.CO_PCT), `${withPct.length}<small>/${N}</small>`, esc(withPct.slice(0,3).map(p => short(p.ten) + " " + fmtN(p.pct,1) + "%").join(" · ") || "Chưa có dự án nào nhập %"));
+  if (CD.MOC_SAT_HAN.on) card(CD.MOC_SAT_HAN.o, upcoming.length ? "alert" : "", tt(CD.MOC_SAT_HAN), `${upcoming.length} <small>mốc</small>`, esc(upcoming.slice(0,3).map(u => short(u.p.ten) + " (" + fmtDM(u.t) + ")").join(" · ") || "Không có mốc sát hạn") + (upcoming.length > 3 ? " …" : ""));
+  if (CD.CAN_CHU_Y.on){ const w = projects.filter(p => p.health === "warn" || p.health === "over");
+    card(CD.CAN_CHU_Y.o, w.length ? "alert" : "", tt(CD.CAN_CHU_Y), `${w.length} <small>dự án</small>`, `${counts.over} quá hạn · ${counts.warn} cảnh báo` + (w.length ? " · " + esc(w.slice(0,2).map(p => short(p.ten)).join(", ")) : "")); }
+  for (const k of kpis){ const v = typeof k.val === "number" ? fmtN(k.val, 2) : esc(k.val ?? "–");
+    card(k.o, k.lvl.includes("canh bao") ? "alert" : k.lvl.includes("noi bat") ? "blue" : "", esc(k.ten), `${v}${blank(k.unit) ? "" : ` <small>${esc(k.unit)}</small>`}`, esc(k.note ?? "")); }
+  cards.sort((a,b) => a.o - b.o);
+  const K = cards.map(c => c.h).join("");
+  // notes
+  const NT = cfg.notes, notes = NT.manual.map(m => ({lv:m.lv + 10, d:m.o, h:esc(m.t), man:true}));
+  if (NT.auto){
+    const RG = cfg.rules.NHOM_CHUA_CAP_NHAT;
+    if (RG.on && RG.top && RG.lv >= NT.minLv) for (const g of groups){ const n = g.items.filter(p => p.health === "none").length;
+      if (g.items.length >= 2 && n / g.items.length * 100 >= P.groupNone) notes.push({lv:RG.lv + .5, d:-1, h:`<span class="o">${esc(fill(RG.t, {nhom:(g.other ? "" : g.no + " – ") + g.ngan, so_chua:n, tong:g.items.length}))}</span>`}); }
+    projects.forEach(p => p.alerts.filter(a => a.top && a.lv >= NT.minLv).forEach(a => notes.push({lv:a.lv, d:a.d, h:`<b>${esc(p.code)} ${esc(short(p.ten))}:</b> ${esc(a.t)}`})));
+  }
+  notes.sort((a,b) => b.lv - a.lv || a.d - b.d);
+  const noteHtml = notes.length ? "<ul>" + notes.slice(0, NT.max).map(n => `<li${n.man ? ' class="man"' : ""}>${n.h}</li>`).join("") + "</ul>" : "<p>Không có lưu ý trong kỳ.</p>";
+  const logo = getLogo();
+  const eyebrow = [cfg.info.donvi, ky ? "Kỳ báo cáo " + ky : null, "Ngày chốt " + fmtD(cut)].filter(Boolean).map(esc).join(" · ");
+  const legend = HEALTH.map(([k, name, col]) => `<div><i style="background:${col}"></i>${name}<b>${counts[k]}</b><span class="pc">${N ? Math.round(counts[k]/N*100) : 0}%</span></div>`).join("");
+  const coverHtml = `<div><div class="top"><div><div class="eyebrow">${eyebrow}</div><h1>${esc(cfg.info.tieude)}</h1></div>${logo ? `<img class="logo" src="${esc(logo)}" alt="Logo">` : ""}</div>
+    <p class="lede">${N} dự án trình ${esc(cfg.info.trinh)}, gom thành ${groups.length} nhóm theo thứ tự ưu tiên điều hành.</p>
+    ${K ? `<div class="kpis">${K}</div>` : ""}
+    <div class="row2"><div class="card"><h3>Sức khỏe tiến độ <span>· ${N} dự án</span></h3><div class="pie">${pieSvg(counts, N)}<div class="plg">${legend}</div></div></div>
+      <div class="summary"><h3>Điểm cần lưu ý</h3>${noteHtml}</div></div></div>`;
+  const IDX_HEAD = `<colgroup><col style="width:7%"><col style="width:53%"><col style="width:15%"><col style="width:16%"><col style="width:9%"></colgroup>
+    <thead><tr><th>Mã</th><th>Danh mục dự án</th><th>Hoàn thành</th><th>Tình trạng</th><th style="text-align:right">Trang</th></tr></thead>`;
+  const idxRows = [];
+  for (const g of groups){
+    idxRows.push({grp:true, html:`<tr class="grp"><td colspan="4"><a class="lk" href="#${g.id}">${g.other ? "" : "Nhóm " + esc(g.no) + " · "}${esc(g.ten)}</a> <span class="gc">${g.items.length} dự án</span></td><td class="pg"><a href="#${g.id}" data-pg="${g.id}">Tr. 00</a></td></tr>`});
+    for (const p of g.items) idxRows.push({html:`<tr><td class="code">${esc(p.code)}</td><td><a class="lk" href="#${p.anchor}">${esc(p.ten)}</a></td>`
+      + `<td>${p.pct !== null ? `<span class="pct">${fmtN(p.pct,1)}%</span><div class="bar2"><i style="width:${Math.max(p.pct,2)}%"></i></div>` : '<span class="dash">—</span>'}</td>`
+      + `<td>${pill(p.health)}</td><td class="pg"><a href="#${p.anchor}" data-pg="${p.anchor}">Tr. 00</a></td></tr>`});
+  }
+  // ---------- paginate cover + index (portrait)
+  let body = newPage("por"); body.appendChild(frag(coverHtml));
+  let tbl = null;
+  const newIdxTable = () => { tbl = frag(`<table class="idx" id="${PAGES.length === 1 ? "toc" : ""}">${IDX_HEAD}<tbody></tbody></table>`); body.appendChild(tbl); return tbl.tBodies[0]; };
+  let tb = newIdxTable();
+  for (let i = 0; i < idxRows.length; i++){
+    const r = idxRows[i], el = frag(`<table><tbody>${r.html}</tbody></table>`).rows[0];
+    tb.appendChild(el);
+    let next = null;
+    if (r.grp && idxRows[i+1]){ next = frag(`<table><tbody>${idxRows[i+1].html}</tbody></table>`).rows[0]; tb.appendChild(next); }
+    if (!fits(body)){
+      el.remove(); next && next.remove();
+      if (!tb.rows.length) tbl.remove();
+      body = newPage("por"); tb = newIdxTable(); tb.appendChild(el); next && tb.appendChild(next);
+    }
+    if (next){ i++; }
+  }
+  const nIdx = PAGES.length;
+  // ---------- paginate detail (landscape)
+  const where = {};
+  const gHead = (g, cont) => `<div class="gh"><h2>${g.other ? "" : "Nhóm " + esc(g.no) + ": "}${esc(g.ten)}${cont ? ' <span class="cont">(tiếp theo)</span>' : ""}</h2><a class="toc" href="#toc">↑ Mục lục</a></div>`
+    + (cont ? "" : `<p class="gsub">Báo cáo tiến độ theo đầu việc · ${g.items.length} dự án${blank(g.dactinh) ? "" : " · " + esc(g.dactinh)}${g.uutien < 99 ? ` <span class="prio">Ưu tiên ${esc(g.uutien)}</span>` : ""}</p>`);
+  let dbody = null, curTable = null;
+  const startBlock = (g, cont) => {
+    const blk = frag(`<div class="gblock"${cont ? "" : ` id="${g.id}"`}>${gHead(g, cont)}<table class="det">${DET_COLS}</table></div>`);
+    dbody.appendChild(blk); curTable = blk.querySelector("table"); return blk;
+  };
+  const tbodyEl = html => frag(`<table>${html}</table>`).tBodies[0];
+  const pageNo = () => PAGES.length;
+  for (const g of groups){
+    // try to place the whole group on the current page
+    if (dbody && P.packGroups){
+      const blk = startBlock(g, false);
+      g.items.forEach(p => curTable.appendChild(tbodyEl(projTbody(p, 0, p.tasks.length, false))));
+      if (fits(dbody)){ where[g.id] = pageNo(); g.items.forEach(p => where[p.anchor] = pageNo()); continue; }
+      blk.remove();
+    }
+    dbody = newPage("land"); startBlock(g, false); where[g.id] = pageNo();
+    let projOnPage = 0;
+    for (const p of g.items){
+      const nT = Math.max(p.tasks.length, 1);
+      let el = tbodyEl(projTbody(p, 0, p.tasks.length, false)); curTable.appendChild(el);
+      if (fits(dbody)){ where[p.anchor] = pageNo(); projOnPage++; continue; }
+      el.remove();
+      let from = 0, first = true;
+      if (projOnPage){
+        // multi-task project: fill the rest of this page with as many tasks as fit, continue on the next page
+        let placed = null, k = nT - 1;
+        if (nT > 1) for (; k >= 1; k--){ placed = tbodyEl(projTbody(p, 0, k, false)); curTable.appendChild(placed); if (fits(dbody)) break; placed.remove(); placed = null; }
+        if (placed){ where[p.anchor] = pageNo(); first = false; from = k; dbody = newPage("land"); startBlock(g, true); }
+        else {
+          dbody = newPage("land"); startBlock(g, true); projOnPage = 0;
+          el = tbodyEl(projTbody(p, 0, p.tasks.length, false)); curTable.appendChild(el);
+          if (fits(dbody)){ where[p.anchor] = pageNo(); projOnPage++; continue; }
+          el.remove();
+        }
+      }
+      // split project by tasks across pages
+      while (from < nT){
+        let k = nT, placed = null;
+        for (; k > from; k--){ placed = tbodyEl(projTbody(p, from, k, !first)); curTable.appendChild(placed); if (fits(dbody)) break; placed.remove(); placed = null; }
+        if (!placed){ k = from + 1; placed = tbodyEl(projTbody(p, from, k, !first)); curTable.appendChild(placed);
+          data.warns.push(`${p.ten}: một đầu việc dài hơn một trang – phần vượt bị che khi in. Hãy rút gọn nội dung.`); }
+        if (first){ where[p.anchor] = pageNo(); first = false; }
+        from = k;
+        if (from < nT){ dbody = newPage("land"); startBlock(g, true); }
+      }
+      projOnPage = 1;
+    }
+  }
+  dbody.appendChild(frag(`<p class="fnote">${blank(cfg.info.ghichu) ? "" : esc(cfg.info.ghichu) + "<br>"}Nguồn: ${esc(fname)} · sheet “${esc(sheet)}”. Mục gắn nhãn “Tự động” sinh theo luật cảnh báo trong sheet Danh mục (sát hạn ≤ ${P.near} ngày; % thấp khi còn ≤ ${P.window} ngày mà dưới ${fmtN(P.minPct)}%). Mốc thời gian tính tại ngày chốt ${fmtD(cut)}.${P.clip ? " Nội dung vượt quy chuẩn độ dài được cắt bớt." : ""}</p>`));
+  if (!fits(dbody)){ const last = dbody.lastElementChild; last.remove(); dbody = newPage("land"); dbody.appendChild(last); }
+  // ---------- numbers & footers
+  document.querySelectorAll("[data-pg]").forEach(a => a.textContent = "Tr. " + (where[a.dataset.pg] ?? "–"));
+  const tot = PAGES.length;
+  PAGES.forEach((pg, i) => { pg.querySelector(".ft").textContent = cfg.info.chantrang; pg.querySelector(".pn").textContent = `Trang ${i+1} / ${tot}`; });
+  document.title = cfg.info.tieude + " – " + fmtD(cut);
+  return {pages: tot, idxPages: nIdx};
+}
+
+/* ============================== logo ============================== */
+function getLogo(){ return window.__logo || DEFAULT_LOGO || ""; }  // web: logo set in code, no browser storage
+
+
+/* ============================== Google Sheet → mẫu v4 ============================== */
+const QS = new URLSearchParams(location.search);
+const SHEET_ID = QS.get('sheet') || '1REPalLHurrRoH2aTNM2TwxVha7dh40X2JJGoopUe9Ro';
+const TABS = ['CauHinh','Nhom','DuAn','DauViec','ChiSo','LuuY'];
+function parseCSV(t){const out=[];let row=[],f='',q=false;for(let i=0;i<t.length;i++){const c=t[i];
+ if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}
+ else if(c=='"')q=true;else if(c==','){row.push(f);f=''}else if(c=='\n'){row.push(f);out.push(row);row=[];f=''}else if(c!='\r')f+=c}
+ if(f!==''||row.length){row.push(f);out.push(row)}return out}
+function objs(rows){const h=(rows[0]||[]).map(s=>s.trim());return rows.slice(1).filter(r=>r.some(x=>x.trim()!=='')).map(r=>Object.fromEntries(h.map((k,i)=>[k,(r[i]||'').trim()])))}
+async function loadTab(t){
+  const url = QS.get('src')==='local' ? `data/${t}.csv` : `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&headers=1&sheet=${encodeURIComponent(t)}&_=${Date.now()}`;
+  const r = await fetch(url, {cache:'no-store'}); if (!r.ok) throw new Error(`Không đọc được sheet “${t}” (${r.status})`);
+  return objs(parseCSV(await r.text()));
+}
+const numOr = v => { const s = String(v ?? '').trim(); return /^-?\d+([.,]\d+)?$/.test(s) ? +s.replace(',', '.') : v; };
+function toWorkbook(T){
+  const cfg = Object.fromEntries(T.CauHinh.map(r => [r['Tham số'], r['Giá trị']]));
+  const title = cfg['Tiêu đề báo cáo PDF'] || 'Báo cáo Tổng thể Danh mục Dự án Trọng điểm';
+  const dm = [];
+  dm.push(['Mã','Tên nhóm','Tên ngắn','Ưu tiên','Đặc tính nhóm','Từ khóa tự gán']);
+  T.Nhom.forEach(g => dm.push([g['Mã nhóm'], g['Tên nhóm'], g['Tên ngắn'], numOr(g['Ưu tiên']), g['Đặc tính nhóm'], '']));
+  dm.push([]);
+  dm.push(['Tham số','Giá trị']);
+  for (const k of ['Sát hạn dự án (ngày)','Cửa sổ kiểm tra % dự án (ngày)','Ngưỡng % tối thiểu','Sát hạn đầu việc (ngày)','Cửa sổ kiểm tra % đầu việc (ngày)'])
+    if (cfg[k]) dm.push([k, numOr(cfg[k])]);
+  dm.push([]);
+  dm.push(['Trường','Giá trị']);
+  dm.push(['Đơn vị lập', cfg['Đơn vị lập'] || 'Văn phòng Ban Điều hành']);
+  dm.push(['Tiêu đề', title]);
+  dm.push(['Trình', cfg['Trình'] || 'Tổng Giám đốc']);
+  dm.push(['Chân trang', cfg['Chân trang'] || 'Tập đoàn Sun Group · ' + title + ' trình ' + (cfg['Trình'] || 'Tổng Giám đốc')]);
+  if (cfg['Ghi chú']) dm.push(['Ghi chú cuối báo cáo', '* ' + cfg['Ghi chú']]);
+  dm.push([]);
+  dm.push(['Thiết lập','Giá trị']);
+  if (cfg['Số mục lưu ý tối đa']) dm.push(['Số mục tối đa', numOr(cfg['Số mục lưu ý tối đa'])]);
+  dm.push([]);
+  dm.push(['Mã thẻ','Tên hiển thị','Hiển thị','Thứ tự']);
+  dm.push(['MOC_SAT_HAN','Mốc đến hạn trong {sat_han} ngày','Có', 2]);
+  dm.push([]);
+  dm.push(['Thứ tự','Nội dung lưu ý','Mức','Hiển thị']);
+  T.LuuY.forEach(n => dm.push([numOr(n['Thứ tự']), n['Nội dung'], n['Mức'], n['Hiển thị']]));
+  const ct = [['Kỳ báo cáo', cfg['Kỳ báo cáo'] || '', 'Ngày chốt', cfg['Ngày chốt'] || ''], []];
+  ct.push(['Mã DA','Tên dự án','Nhóm','Giai đoạn','Mô tả / mục tiêu dự án','Mốc chính','Hạn hoàn thành DA','% hoàn thành DA','Trạng thái','Giám đốc dự án','Vướng mắc / Hỗ trợ cần','Đề xuất','STT','Đầu việc','Mục tiêu đầu việc','% đầu việc','Nhãn %','Kết quả đến hiện tại','Kế hoạch tuần tới','Hạn đầu việc','Phụ trách đầu việc']);
+  const tasks = {}; T.DauViec.forEach(t => (tasks[t['Mã DA']] ??= []).push(t));
+  for (const p of T.DuAn){
+    const P = [p['Mã DA'], p['Tên dự án'], p['Mã nhóm'], p['Giai đoạn'], p['Mô tả / mục tiêu'], p['Mốc chính'], p['Hạn hoàn thành'], p['% hoàn thành'], p['Trạng thái'], p['Giám đốc dự án'], p['Vướng mắc / hỗ trợ cần'], p['Đề xuất']];
+    const ts = (tasks[p['Mã DA']] || []).sort((a,b) => (+a['STT']||0) - (+b['STT']||0));
+    if (!ts.length) ct.push([...P, '', '', '', '', '', '', '', '', '']);
+    ts.forEach(t => ct.push([...P, numOr(t['STT']), t['Đầu việc'], t['Mục tiêu'], t['% hoàn thành'], t['Nhãn %'], t['Kết quả đến hiện tại'], t['Kế hoạch tuần tới'], t['Hạn'], t['Phụ trách']]));
+  }
+  const cs = [['Tên chỉ số','Giá trị','Đơn vị','Ghi chú','Mức','Hiển thị','Thứ tự']];
+  T.ChiSo.forEach(k => cs.push([k['Tên chỉ số'], numOr(k['Giá trị']), k['Đơn vị'], k['Ghi chú'], k['Mức'], k['Hiển thị'], numOr(k['Thứ tự'])]));
+  return {SheetNames:['Chi tiết DA','Danh mục','Chỉ số'], Sheets:{'Chi tiết DA':{aoa:ct}, 'Danh mục':{aoa:dm}, 'Chỉ số':{aoa:cs}}};
+}
+function fitScreen(){
+  if (matchMedia('print').matches) return;
+  const w = document.documentElement.clientWidth, pw = 297 * 96 / 25.4 + 24;
+  document.getElementById('pages').style.zoom = w < pw ? (w / pw).toFixed(3) : '';
+}
+async function main(){
+  const warns = [];
+  try {
+    const T = {}; await Promise.all(TABS.map(async t => T[t] = await loadTab(t)));
+    const wb = toWorkbook(T);
+    const cfg = parseConfig(wb, warns);
+    const m = parseMain(wb, warns);
+    const cut = m.chot ?? todayUTC();
+    m.projects.forEach(p => analyse(p, cfg, cut, warns));
+    const groups = assignGroups(m.projects, cfg, warns);
+    document.body.classList.add('has-report');
+    const res = render({cfg, groups, kpis: parseKpis(wb), cut, ky: m.ky, fname: 'Google Sheet “BC Dự án Trọng điểm”', sheet: 'DuAn / DauViec', warns});
+    document.getElementById('loading').remove();
+    $('#bPrint').disabled = false;
+    $('#fname').textContent = `${m.projects.length} dự án · ${res.pages} trang · ngày chốt ${fmtD(cut)}`;
+    window.__result = {...res, warns};
+    fitScreen();
+    if (QS.get('print') === '1') setTimeout(() => window.print(), 400);
+  } catch(e){
+    console.warn(e);
+    document.getElementById('loading').textContent = 'Chưa tải được dữ liệu: ' + e.message;
+  }
+}
+$('#bPrint').onclick = () => window.print();
+addEventListener('resize', fitScreen);
+addEventListener('beforeprint', () => { document.getElementById('pages').style.zoom = ''; });
+addEventListener('afterprint', fitScreen);
+main();
+</script>
+</body>
+</html>
